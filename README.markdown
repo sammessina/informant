@@ -1,14 +1,13 @@
 Informant - An Information Board
 ================================
-
 Panes
 -----
-	Assignments
-	Todo
-	Clock
-	Classes
-	Time until wake
-	Unread Email?
+* Assignments
+* Todo
+* Clock
+* Classes
+* Time until wake
+* Unread Email?
 
 Management
 ----------
