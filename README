@@ -1,4 +1,4 @@
-Informant - An Information Board.
+Informant - An Information Board
 
 Panes:
 	Assignments
@@ -24,7 +24,7 @@ Technologies:
 			Google Chrome has beautiful font rendering
 			Ajax for data sync, handled by Javascript
 			Might be hard to handle stuff that needs to be persistant, like an IMAP connection
-			Very big pro: easy to set up anywhere, assuming it's on an internet site (maybe shouldn't be for any practical use)
+			Very big pro: easy to set up anywhere, assuming it's on an internet site
 		Executable:
 			Perhaps powered by Java
 			Obviously data syncronization would be instant
