@@ -1,4 +1,6 @@
-Informant - An Information Board
+Informant
+=========
+An Information Board
 
 Panes:
 	Assignments
