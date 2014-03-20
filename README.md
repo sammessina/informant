@@ -1,6 +1,17 @@
 Informant
 =========
-An information board
+An information board designed to be easy to set up and use.
+
+### Goals:
+* Easy to set up
+* Feature-rich
+
+### Set up
+* Python front-end
+*
+
+
+
 
 ### Panes:
 * Assignments
