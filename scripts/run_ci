@@ -6,17 +6,17 @@
 #   Run this script normally and the latest code will be synced in ./informant/
 #   To set as startup on raspberry pi: run_ci --install
 
-LOCALDIR = `pwd`
-GITDIR = $(LOCALDIR)/informant/
+LOCALDIR=`pwd`
+GITDIR=$LOCALDIR/informant/
 
 # Set as startup program on raspberry pi
 function install {
-
+    exit
 }
 
 # Remove as startup program on raspberry pi
 function uninstall {
-
+    exit
 }
 
 function start_informant {
@@ -31,14 +31,14 @@ function init_git {
     if [ -d $GITDIR ]; then
         return
     fi
-    mkdir $GITDIR
-    if [ ! -d $GITDIR ]; then
-        echo "Error: Could not make dir '$(GITDIR)'"
-        exit 1
-    fi
-    cd $GITDIR
+    #mkdir $GITDIR
+    #if [ ! -d $GITDIR ]; then
+    #    echo "Error: Could not make dir '$(GITDIR)'"
+    #    exit 1
+    #fi
+    #cd $GITDIR
     git clone https://github.com/youresam/informant.git
-    cd $LOCALDIR
+    #cd $LOCALDIR
 }
 
 function query_git {
