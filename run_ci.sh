@@ -31,7 +31,7 @@ function stop_informant {
 }
 
 function query_git {
-    [ "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1
+    [ "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
 }
 
 init_git
