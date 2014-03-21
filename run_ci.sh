@@ -9,7 +9,7 @@
 # local vars
 changed=0
 localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
-this_script_mtime = `stat -c%Y run_ci.sh`
+this_script_mtime=`stat -c%Y run_ci.sh`
 echo "script mtime="
 echo ${this_script_mtime}
 # Set as startup program on raspberry pi
