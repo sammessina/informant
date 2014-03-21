@@ -6,9 +6,12 @@
 #   Run this script normally and the latest code will be synced in ./informant/
 #   To set as startup on raspberry pi: run_ci --install
 
-LOCALDIR=`pwd`
-GITDIR=$LOCALDIR/informant/
-
+# local vars
+changed=0
+localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
+this_script_mtime = `stat -c%Y`
+echo "script mtime="
+echo ${this_script_mtime}
 # Set as startup program on raspberry pi
 function install {
     exit
@@ -20,33 +23,15 @@ function uninstall {
 }
 
 function start_informant {
-    exit
+    python ${localdir}/src/informant.py
 }
 
 function stop_informant {
-    kill informant.py
-}
-
-function init_git {
-    if [ -d $GITDIR ]; then
-        return
-    fi
-    #mkdir $GITDIR
-    #if [ ! -d $GITDIR ]; then
-    #    echo "Error: Could not make dir '$(GITDIR)'"
-    #    exit 1
-    #fi
-    #cd $GITDIR
-    git clone https://github.com/youresam/informant.git
-    #cd $LOCALDIR
+    killall -w informant.py
 }
 
 function query_git {
-    cd $GITDIR
     [ "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1
-    cd $LOCALDIR
-    echo "changed? "
-    echo $changed
 }
 
 init_git
@@ -59,5 +44,5 @@ exit 0
 start_informant
 
 while true; do
-
+    exit
 done
