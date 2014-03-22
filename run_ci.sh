@@ -59,6 +59,7 @@ function update {
     start_informant
 }
 
+stop_informant
 start_informant
 
 while true; do
