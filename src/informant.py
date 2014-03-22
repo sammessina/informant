@@ -9,6 +9,7 @@ from render import TextImg, MultiColoredTextImg
 from modules import weather
 
 
+
 pygame.init()
 fpsClock = pygame.time.Clock()
 pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
