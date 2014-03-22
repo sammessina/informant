@@ -64,7 +64,9 @@ function update {
 }
 
 #pkill -f run_ci.sh
-kill `pidof -x -o $$ run_ci.sh`
+if [ $(pidof -x -o $$ run_ci.sh) -gt 0 ]; then
+    kill `pidof -x -o $$ run_ci.sh`
+fi
 stop_informant
 start_informant
 
