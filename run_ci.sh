@@ -50,7 +50,6 @@ function update {
     git fetch --all
     git reset --hard origin/master
     chmod +x ${localdir}/run_ci.sh
-    #todo ensure pull works no matter what
     new_script_mtime=`stat -c%Y ${localdir}/run_ci.sh`
     echo "$new_script_mtime = $new_script_mtime, this_script_mtime = $this_script_mtime "
     if [ "$new_script_mtime" -ne "$this_script_mtime" ]; then
@@ -62,7 +61,7 @@ function update {
 }
 
 stop_informant
-query_git
+update
 if [ $(pidof -x run_ci.sh | wc -w) -gt 2 ]; then
     echo "killing other run_ci process"
     kill `pidof -x -o $$ run_ci.sh`
