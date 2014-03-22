@@ -27,7 +27,7 @@ function start_informant {
 
 function stop_informant {
     echo "stopping informant"
-    killall -w informant.py
+    pkill -f informant.py
 }
 
 function query_git {
@@ -44,7 +44,7 @@ function update {
     echo "updating informant"
     git pull
     #todo ensure pull works no matter what
-    new_script_mtime=`stat -c%Y run_ci.sh`
+    new_script_mtime=`stat -c%Y ${localdir}/run_ci.sh`
     echo "$new_script_mtime = $new_script_mtime, this_script_mtime = $this_script_mtime "
     if [ "$new_script_mtime" -ne "$this_script_mtime" ]
      then
