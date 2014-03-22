@@ -12,6 +12,8 @@ this_script_mtime=`stat -c%Y run_ci.sh`
 
 # Set as startup program on raspberry pi
 function install {
+    #add line (if not exists) to /etc/xdg/lxsession/LXDE/autostart
+    # @/home/pi/board/informant/run_ci.sh
     exit #todo
 }
 
@@ -65,5 +67,5 @@ start_informant
 
 while true; do
     query_git
-    sleep 300 #5 mins
+    sleep 30
 done
