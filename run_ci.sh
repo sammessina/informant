@@ -61,12 +61,13 @@ function update {
     start_informant
 }
 
-#pkill -f run_ci.sh
-if [ `pidof -x -o $$ run_ci.sh` -gt 0 ]; then
+
+stop_informant
+query_git
+if [ `pidof -x run_ci.sh` -gt 1 ]; then
     echo "killing other run_ci process"
     kill `pidof -x -o $$ run_ci.sh`
 fi
-stop_informant
 start_informant
 
 while true; do
