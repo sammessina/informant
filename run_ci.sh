@@ -70,5 +70,5 @@ start_informant
 
 while true; do
     query_git
-    sleep 30
+    sleep 10
 done
