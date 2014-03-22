@@ -1,7 +1,7 @@
 import urllib
 import json
 
-from src import render
+import render
 
 
 class Module():

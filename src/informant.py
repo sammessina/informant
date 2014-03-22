@@ -5,7 +5,8 @@ from time import strftime, localtime
 import pygame
 from pygame.locals import *
 
-from src.render import TextImg, MultiColoredTextImg
+from render import TextImg, MultiColoredTextImg
+from modules import weather
 
 
 pygame.init()
@@ -31,7 +32,7 @@ fps_target = 30
 
 fpsLabel = TextImg(color="red")
 
-loadedModules = [src.modules.weather.WeatherModule()]
+loadedModules = [weather.WeatherModule()]
 
 while True:
     for event in pygame.event.get():

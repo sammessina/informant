@@ -21,15 +21,19 @@ function uninstall {
 }
 
 function start_informant {
-    python ${localdir}/src/informant.py
+    echo "starting informant"
+    cd ${localdir}/src && python informant.py &
 }
 
 function stop_informant {
+    echo "stopping informant"
     killall -w informant.py
 }
 
 function query_git {
+    echo "querying remote repo"
     [ "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
+    echo "git changed=${changed}"
     if [ ${changed} -eq 1 ]
      then
         update
@@ -37,6 +41,7 @@ function query_git {
 }
 
 function update {
+    echo "updating informant"
     git pull
     #todo ensure pull works no matter what
     new_script_mtime=`stat -c%Y run_ci.sh`
