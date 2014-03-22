@@ -59,6 +59,7 @@ function update {
     start_informant
 }
 
+pkill -f run_ci.sh
 stop_informant
 start_informant
 
