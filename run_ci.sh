@@ -42,7 +42,11 @@ function query_git {
 
 function update {
     echo "updating informant"
-    git pull
+    stop_informant
+    #git pull
+    git fetch --all
+    git reset --hard origin/master
+    chmod +x ${localdir}/run_ci.sh
     #todo ensure pull works no matter what
     new_script_mtime=`stat -c%Y ${localdir}/run_ci.sh`
     echo "$new_script_mtime = $new_script_mtime, this_script_mtime = $this_script_mtime "
@@ -52,7 +56,6 @@ function update {
         ${localdir}/run_ci.sh &
         exit 0
     fi
-    stop_informant
     start_informant
 }
 
