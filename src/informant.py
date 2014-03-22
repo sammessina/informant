@@ -11,8 +11,8 @@ from modules import weather
 
 pygame.init()
 fpsClock = pygame.time.Clock()
-#pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
-pygame.display.set_mode((1024, 600), pygame.RESIZABLE | pygame.HWSURFACE)
+pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
+#pygame.display.set_mode((1024, 600), pygame.RESIZABLE | pygame.HWSURFACE)
 pygame.mouse.set_visible(False)
 pygame.display.set_caption('Clock')
 
