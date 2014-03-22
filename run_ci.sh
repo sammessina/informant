@@ -34,6 +34,7 @@ function stop_informant {
 
 function query_git {
     echo "querying remote repo"
+    cd ${localdir}
     [ "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
     echo "git changed=${changed}"
     if [ ${changed} -eq 1 ]
@@ -46,6 +47,7 @@ function update {
     echo "updating informant"
     stop_informant
     #git pull
+    cd ${localdir}
     git fetch --all
     git reset --hard origin/master
     chmod +x ${localdir}/run_ci.sh
