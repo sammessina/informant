@@ -52,7 +52,7 @@ function update {
     chmod +x ${localdir}/run_ci.sh
     new_script_hash=`md5sum ${localdir}/run_ci.sh`
     echo "new hash = $new_script_hash, old hash = $this_script_hash"
-    if [ "$new_script_hash" -ne "$this_script_hash" ]; then
+    if [ "$new_script_hash" != "$this_script_hash" ]; then
         echo "CI script updated, restarting..."
         ${localdir}/run_ci.sh &
         exit 0
