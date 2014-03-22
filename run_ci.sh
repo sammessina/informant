@@ -8,7 +8,7 @@
 
 # local vars
 localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
-this_script_mtime=`stat -c%Y run_ci.sh`
+this_script_hash=`md5sum ${localdir}/run_ci.sh`
 
 # Set as startup program on raspberry pi
 function install {
@@ -50,9 +50,9 @@ function update {
     git fetch --all
     git reset --hard origin/master
     chmod +x ${localdir}/run_ci.sh
-    new_script_mtime=`stat -c%Y ${localdir}/run_ci.sh`
-    echo "$new_script_mtime = $new_script_mtime, this_script_mtime = $this_script_mtime "
-    if [ "$new_script_mtime" -ne "$this_script_mtime" ]; then
+    new_script_hash=`md5sum ${localdir}/run_ci.sh`
+    echo "new hash = $new_script_hash, old hash = $this_script_hash"
+    if [ "$new_script_hash" -ne "$this_script_hash" ]; then
         echo "CI script updated, restarting..."
         ${localdir}/run_ci.sh &
         exit 0
