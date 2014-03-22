@@ -63,7 +63,8 @@ function update {
     start_informant
 }
 
-pkill -f run_ci.sh
+#pkill -f run_ci.sh
+kill `pidof -x -o $$ run_ci.sh`
 stop_informant
 start_informant
 
