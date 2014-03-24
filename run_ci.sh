@@ -14,7 +14,7 @@
 # local vars
 localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
 synceddir="$2"
-this_script_hash=`md5sum ${localdir}/run_ci.sh`
+this_script_hash=($(md5sum ${localdir}/run_ci.sh))
 
 # Set as startup program on raspberry pi
 function install {
@@ -56,7 +56,7 @@ function update {
     git fetch --all
     git reset --hard origin/master
     chmod +x ${synceddir}/run_ci.sh
-    new_script_hash=`md5sum ${synceddir}/run_ci.sh`
+    new_script_hash=($(md5sum ${synceddir}/run_ci.sh))
     echo "new hash = $new_script_hash, old hash = $this_script_hash"
     if [ "$new_script_hash" != "$this_script_hash" ]; then
         echo "CI script updated, restarting..."
