@@ -9,6 +9,8 @@
 # Spec: Running this file normally copies its directory to tmp and runs from there by
 #       using the args: run <origindir>
 
+# To reset during testing: git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
+
 # local vars
 localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
 synceddir=""
