@@ -88,5 +88,5 @@ fi
 # copy over to tmp to run
 # this is because run_ci.sh was being zeroed
 tmpdir=`mktemp -d`
-cp . ${tmpdir}
+cp -rf ${localdir} ${tmpdir}
 ${tmpdir}/run_ci.sh run ${localdir}
