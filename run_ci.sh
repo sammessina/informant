@@ -69,7 +69,6 @@ function update {
 function run {
     echo "synceddir=$synceddir"
     stop_informant
-    update
     if [ $(pidof -x run_ci.sh | wc -w) -gt 2 ]; then
         echo "killing other run_ci process"
         kill `pidof -x -o $$ run_ci.sh`
