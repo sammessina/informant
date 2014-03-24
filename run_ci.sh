@@ -68,6 +68,7 @@ function update {
 
 function run {
     synceddir="$2"
+    echo "synceddir=$synceddir"
     stop_informant
     update
     if [ $(pidof -x run_ci.sh | wc -w) -gt 2 ]; then
