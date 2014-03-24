@@ -89,4 +89,4 @@ fi
 # this is because run_ci.sh was being zeroed
 tmpdir=`mktemp -d`
 cp -rf ${localdir} ${tmpdir}
-${tmpdir}/run_ci.sh run ${localdir}
+${tmpdir}/informant/run_ci.sh run ${localdir}
