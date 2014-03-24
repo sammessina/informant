@@ -13,7 +13,7 @@
 
 # local vars
 localdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #http://stackoverflow.com/a/246128
-synceddir=""
+synceddir="$2"
 this_script_hash=`md5sum ${localdir}/run_ci.sh`
 
 # Set as startup program on raspberry pi
@@ -67,7 +67,6 @@ function update {
 }
 
 function run {
-    synceddir="$2"
     echo "synceddir=$synceddir"
     stop_informant
     update
