@@ -49,7 +49,7 @@ function query_git {
     fi
     if [ ${changed} -eq 1 ]; then
         update
-        run_ci.sh &
+        run_ci.sh
         exit 0
     fi
 }
