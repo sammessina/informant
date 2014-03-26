@@ -9,7 +9,7 @@ An information board designed to be easy to set up and use.
 * Feature-rich
 
 ### Raspberry Pi Setup
-1. Install (Raspbian)[http://www.raspberrypi.org/downloads]
+1. Install [Raspbian](http://www.raspberrypi.org/downloads)
 2. Config Raspbian
   * config.txt options
     * disable_overscan=1
