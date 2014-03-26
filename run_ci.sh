@@ -42,15 +42,15 @@ function stop_informant {
 function query_git {
     echo "querying remote repo"
     cd ${localdir}
-    log="`git log --pretty=%H ...refs/heads/master^ | head -n 1`"
+    log="`git ls-remote origin -h refs/heads/master | cut -f1`"
     if [ ${#log} -eq 40 ]; then
-        [ "$log" = "`git ls-remote origin -h refs/heads/master | cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
+        [ "$log" = "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
         echo "git changed=${changed}"
     fi
     if [ ${changed} -eq 1 ]; then
         update
-        run_ci.sh
-        exit 0
+        #run_ci.sh
+        #exit 0
     fi
 }
 
@@ -58,10 +58,11 @@ function update {
     echo "updating informant"
     cd ${localdir}
     git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
+    start_informant
 }
 
 function main {
-    query_git
+    #query_git
     start_informant
     while true; do
         query_git
