@@ -9,6 +9,7 @@
 # Spec: Running this file normally copies its directory to tmp and runs from there by
 #       using the args: run <origindir>
 
+#fixme: this file keeps getting erased on shutdown and I don't know why. workaround is to run the following cmd on boot
 # To reset during testing: git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
 
 # local vars
@@ -43,23 +44,20 @@ function query_git {
     cd ${localdir}
     log="`git log --pretty=%H ...refs/heads/master^ | head -n 1`"
     if [ ${#log} -eq 40 ]; then
-        [ "$log" = "`git ls-remote origin -h refs/heads/master |cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
+        [ "$log" = "`git ls-remote origin -h refs/heads/master | cut -f1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
         echo "git changed=${changed}"
     fi
     if [ ${changed} -eq 1 ]; then
         update
-        ${localdir}/run_ci.sh &
+        run_ci.sh &
         exit 0
     fi
 }
 
 function update {
     echo "updating informant"
-    #git pull
     cd ${localdir}
-    git fetch --all
-    git reset --hard origin/master
-    chmod +x ${localdir}/run_ci.sh
+    git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
 }
 
 function main {
