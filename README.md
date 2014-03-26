@@ -8,8 +8,17 @@ An information board designed to be easy to set up and use.
 * Easy to set up
 * Feature-rich
 
-### Set up
-* Python front-end
+### Raspberry Pi Setup
+1. Install (Raspbian)[http://www.raspberrypi.org/downloads]
+2. Config Raspbian
+  * config.txt options
+    * disable_overscan=1
+    * hdmi_force_hotplug=1 (if VGA)
+    * config_hdmi_boost=4 (if VGA)
+  * Boot to desktop
+  * Wifi
+3. git clone https://github.com/youresam/informant.git
+4. cd informant && ./run_ci.sh install
 
 ### Panes:
 * Assignments
