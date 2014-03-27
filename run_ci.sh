@@ -42,6 +42,7 @@ function stop_informant {
 function query_git {
     echo "querying remote repo"
     cd ${localdir}
+    changed=0
     log="`git ls-remote origin -h refs/heads/master | cut -f1`"
     if [ ${#log} -eq 40 ]; then
         [ "$log" = "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
