@@ -21,7 +21,7 @@ function install {
     #add line (if not exists) to /etc/xdg/lxsession/LXDE/autostart
     #todo: if not exists
     echo "Installing to /etc/xdg/lxsession/LXDE/autostart"
-    printf "lxterminal -e \"\n${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
+    printf "\nlxterminal -e \"${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
     exit 0
 }
 
