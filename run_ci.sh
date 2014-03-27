@@ -21,14 +21,15 @@ function install {
     #add line (if not exists) to /etc/xdg/lxsession/LXDE/autostart
     #todo: if not exists
     echo "Installing to /etc/xdg/lxsession/LXDE/autostart"
-    echo "lxterminal -e \"\n${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
+    printf "lxterminal -e \"\n${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
     exit 0
 }
 
 # Remove as startup program on raspberry pi
 function uninstall {
-    echo "todo"
-    exit #todo
+    echo "Uninstalling from /etc/xdg/lxsession/LXDE/autostart"
+    sed -i '/run_ci\.sh/d' /etc/xdg/lxsession/LXDE/autostart
+    exit 0
 }
 
 function start_informant {
@@ -76,6 +77,10 @@ function main {
 
 if [ "$1" == "install" ]; then
     install
+fi
+
+if [ "$1" == "uninstall" ]; then
+    uninstall
 fi
 
 main
