@@ -30,7 +30,7 @@ screen_h = pygame.display.Info().current_h
 time_x = 0
 time_y = 0
 last_minute = -1
-fps_target = 30
+fps_target = 10
 
 fpsLabel = TextImg(color="red")
 
