@@ -18,7 +18,7 @@ An information board designed to be easy to set up and use.
   * Boot to desktop
   * Wifi
 3. git clone https://github.com/youresam/informant.git
-4. cd informant && ./run_ci.sh install
+4. cd informant && sudo ./run_ci.sh install
 
 ### Panes:
 * Assignments
