@@ -5,10 +5,10 @@ __author__ = 'Sam'
 
 
 class TextImg():
-    def __init__(self, font=None, color="white"):
+    def __init__(self, font=None, color="white", size=32):
         self._color = Color(color)
         self._text = None
-        self._font = font if font is not None else pygame.font.Font(pygame.font.match_font('Arial'), 32)
+        self._font = font if font is not None else pygame.font.Font(pygame.font.match_font('Arial'), size)
         self._image = None
         self._rect = None
 
@@ -21,6 +21,10 @@ class TextImg():
             self._text = str(text)
             self._image = None
 
+    def set_color(self, color):
+        self._color = Color(color)
+        self._image = None
+
     def render(self, screen, x, y, text=None):
         if text is not None:
             self.set_text(text)
@@ -30,9 +34,13 @@ class TextImg():
         screen.blit(self._image, self._rect)
 
     def render_width(self):
+        if self._image is None:
+            self._render()
         return self._rect.width
 
     def render_height(self):
+        if self._image is None:
+            self._render()
         return self._rect.height
 
 

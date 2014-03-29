@@ -35,12 +35,12 @@ function uninstall {
 function start_informant {
     stop_informant
     echo "starting informant"
-    cd ${localdir}/src && python informant.py &
+    cd ${localdir}/src && python main.py &
 }
 
 function stop_informant {
     echo "stopping informant"
-    pkill -f informant.py
+    pkill -f main.py
 }
 
 function query_git {
