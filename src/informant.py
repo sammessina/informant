@@ -63,7 +63,7 @@ class Informant():
                 self.screen.fill(Color("black"))
 
             i += 10
-            thetime = localtime(i)  # place i in parens for test mode
+            thetime = localtime()  # place i in parens for test mode
             minute = strftime("%M", thetime)
             clock.set_text(0, str(int(strftime("%I", thetime))))
             clock.set_text(2, minute)
