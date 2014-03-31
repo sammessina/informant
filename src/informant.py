@@ -13,6 +13,7 @@ from modules import weather
 
 class Informant():
     def __init__(self):
+        self.fps_target = 3
         self.screen = None
 
     def displayLoadingScreen(self):
@@ -26,7 +27,7 @@ class Informant():
         pygame.init()
         fpsClock = pygame.time.Clock()
         pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
-        #pygame.display.set_mode((1024, 600), pygame.RESIZABLE | pygame.HWSURFACE)
+        #pygame.display.set_mode((1024, 600), pygame.RESIZABLE)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption('Clock')
 
@@ -42,7 +43,7 @@ class Informant():
         time_x = 0
         time_y = 0
         last_minute = -1
-        fps_target = 10
+
 
         fpsLabel = TextImg(color="red")
 
@@ -59,8 +60,8 @@ class Informant():
                     if event.key == K_ESCAPE:
                         pygame.quit()
                         sys.exit()
-            if i % 500 == 0:
-                self.screen.fill(Color("black"))
+
+            self.screen.fill(Color("black"))
 
             i += 10
             thetime = localtime()  # place i in parens for test mode
@@ -79,7 +80,7 @@ class Informant():
                 module.render(self.screen)
 
             fps = int(fpsClock.get_fps())
-            if fps < .85 * fps_target:
+            if fps < .85 * self.fps_target:
                 fpsLabel.render(self.screen, 0, 0, str(fps) + " FPS")
             pygame.display.update()
-            fpsClock.tick(fps_target)
+            fpsClock.tick(self.fps_target)
