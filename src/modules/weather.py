@@ -31,9 +31,8 @@ class WeatherModule(Module):
             self.temp_f = result['current_observation']['temp_f']
             icon = result['current_observation']['weather']
             self.img = pygame.image.load("media/weather/" + icon + ".gif").convert()
-            pass
         except Exception:
-
+            pass
 
         def render(self, screen):
             self._i += 1
