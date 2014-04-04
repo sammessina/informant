@@ -36,6 +36,7 @@ class WeatherModule(Module):
 
 
         def render(self, screen):
+            self._i += 1
             if self._i > 60:
                 self.get_weather()
             self.label.render(screen, 500, 500, "%.1f F" % self.temp_f)
