@@ -28,9 +28,8 @@ class WeatherModule(Module):
             url = 'http://api.wunderground.com/api/c5cec5a481c71293/conditions/q/98052.json'
             result = json.load(urllib.urlopen(url))
             self.temp_f = "%.1f F" % result['current_observation']['temp_f']
-            icon = result['current_observation']['weather']
+            icon = result['current_observation']['icon']
             self.img = pygame.image.load("media/weather/" + icon + ".gif").convert()
-
         except Exception as e:
             self.temp_f = "%s" % e
 
