@@ -22,7 +22,6 @@ class WeatherModule(Module):
         self._i = 0
         self.get_weather()
 
-
     def get_weather(self):
         try:
             self._i = 0
@@ -34,10 +33,10 @@ class WeatherModule(Module):
         except Exception:
             pass
 
-        def render(self, screen):
-            self._i += 1
-            if self._i > 60:
-                self.get_weather()
-            self.label.render(screen, 500, 500, "%.1f F" % self.temp_f)
-            if self.img is not None:
-                screen.blit(self.img, (100, 100))
+    def render(self, screen):
+        self._i += 1
+        if self._i > 60:
+            self.get_weather()
+        self.label.render(screen, 500, 500, "%.1f F" % self.temp_f)
+        if self.img is not None:
+            screen.blit(self.img, (100, 100))
