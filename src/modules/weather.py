@@ -27,16 +27,17 @@ class WeatherModule(Module):
             self._i = 0
             url = 'http://api.wunderground.com/api/c5cec5a481c71293/conditions/q/98052.json'
             result = json.load(urllib.urlopen(url))
-            self.temp_f = result['current_observation']['temp_f']
+            self.temp_f = "%.1f F" % result['current_observation']['temp_f']
             icon = result['current_observation']['weather']
             self.img = pygame.image.load("media/weather/" + icon + ".gif").convert()
-        except Exception:
-            pass
+
+        except Exception as e:
+            self.temp_f = "%s" % e
 
     def render(self, screen):
         self._i += 1
         if self._i > 60:
             self.get_weather()
-        self.label.render(screen, 500, 500, "%.1f F" % self.temp_f)
+        self.label.render(screen, 500, 500, self.temp_f)
         if self.img is not None:
             screen.blit(self.img, (100, 100))
