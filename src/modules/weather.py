@@ -16,7 +16,7 @@ class Module():
 class WeatherModule(Module):
     def __init__(self):
         Module.__init__(self)
-        self.label = render.TextImg(color="blue", size=40)
+        self.label = render.TextImg(color="#cccccc", size=50)
         self.img = None
         self.temp_f = 999
         self._i = 0
