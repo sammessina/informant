@@ -62,3 +62,8 @@ class MultiColoredTextImg():
             offset += part.render_width()
             self.height = part.render_height()
         self.width = offset
+
+class ScreenInfo():
+    def __init__(self):
+        self.width = 0
+        self.height = 0

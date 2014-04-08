@@ -9,14 +9,14 @@ class Module():
     def __init__(self):
         pass
 
-    def render(self, screen):
+    def render(self, screen, screen_info):
         pass
 
 
 class WeatherModule(Module):
     def __init__(self):
         Module.__init__(self)
-        self.label = render.TextImg(color="blue")
+        self.label = render.TextImg(color="blue", size=40)
         self.img = None
         self.temp_f = 999
         self._i = 0
@@ -33,10 +33,10 @@ class WeatherModule(Module):
         except Exception as e:
             self.temp_f = "%s" % e
 
-    def render(self, screen):
+    def render(self, screen, screen_info):
         self._i += 1
         if self._i > 180 * 30:
             self.get_weather()
-        self.label.render(screen, 500, 500, self.temp_f)
+        self.label.render(screen, 500, screen_info.height - 150, self.temp_f)
         if self.img is not None:
-            screen.blit(self.img, (100, 100))
+            screen.blit(self.img, (100, screen_info.height - 150))
