@@ -1,3 +1,3 @@
 import informant
 
-informant.Informant().main();
+informant.Informant().main()

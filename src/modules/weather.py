@@ -35,7 +35,7 @@ class WeatherModule(Module):
 
     def render(self, screen):
         self._i += 1
-        if self._i > 60:
+        if self._i > 180 * 30:
             self.get_weather()
         self.label.render(screen, 500, 500, self.temp_f)
         if self.img is not None:
