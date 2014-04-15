@@ -9,6 +9,7 @@ import pygame
 
 
 class WeatherModule(Module):
+    GRADIENT_SIZE = 300
     def __init__(self):
         Module.__init__(self)
         self.temp_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
@@ -16,6 +17,7 @@ class WeatherModule(Module):
         self.img = None
         self.temp_f = 999
         self._i = 0
+        self._gradient = None
         self.get_weather()
 
     def get_weather(self):
@@ -35,6 +37,10 @@ class WeatherModule(Module):
         self._i += 1
         if self._i > 180 * 30:
             self.get_weather()
+        if self._gradient is None:
+            self._gradient = render.Gradient(screen_info.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0), pygame.Color(0, 0, 0, 255))
+
+        self._gradient.render(screen, 0, screen_info.height - self.GRADIENT_SIZE)
         self.temp_label.render(screen, screen_info.width - 500, screen_info.height - 150, self.temp_f)
         self.weather_label.render(screen, 500, screen_info.height - 150)
         if self.img is not None:

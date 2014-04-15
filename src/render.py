@@ -119,6 +119,25 @@ class OutlinedTextImg(TextRendererBase):
         screen.blit(self._image, self._rect)
 
 
+class Gradient():
+    def __init__(self, width, height, topcolor, bottomcolor):
+        self._image = pygame.Surface((width, height), pygame.SRCALPHA)
+        self._image.set_alpha(0)
+        self._rect = self._image.get_rect()
+        color = pygame.Color("black")
+        for y in range(0, height):
+            scale = y / float(height)
+            color.r = int((topcolor.r * (1 - scale)) + (bottomcolor.r * scale))
+            color.g = int((topcolor.g * (1 - scale)) + (bottomcolor.g * scale))
+            color.b = int((topcolor.b * (1 - scale)) + (bottomcolor.b * scale))
+            color.a = int((topcolor.a * (1 - scale)) + (bottomcolor.a * scale))
+            pygame.draw.line(self._image, color, (0, y), (width - 1, y))
+
+    def render(self, screen, x, y):
+        self._rect.topleft = (x, y)
+        screen.blit(self._image, self._rect)
+
+
 class ScreenInfo():
     def __init__(self):
         self.width = 0
@@ -131,3 +150,4 @@ class Module():
 
     def render(self, screen, screen_info):
         pass
+
