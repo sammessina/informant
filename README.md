@@ -15,6 +15,8 @@ An information board designed to be easy to set up and use.
     * disable_overscan=1
     * hdmi_force_hotplug=1 (if VGA)
     * config_hdmi_boost=4 (if VGA)
+    * framebuffer_depth=32
+    * framebuffer_ignore_alpha=1
   * Boot to desktop
   * Wifi
 3. git clone https://github.com/youresam/informant.git

@@ -132,8 +132,6 @@ class Gradient():
             color.b = int((topcolor.b * (1 - scale)) + (bottomcolor.b * scale))
             color.a = int((topcolor.a * (1 - scale)) + (bottomcolor.a * scale))
             pygame.draw.line(self._image, color, (0, y), (width - 1, y))
-        TextImg().render(self._image, 0, 0, self._image.get_bitsize())
-        TextImg().render(self._image, 0, 80, self._image.get_bytesize())
 
     def render(self, screen, x, y):
         self._rect.topleft = (x, y)
