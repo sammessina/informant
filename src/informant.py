@@ -52,7 +52,7 @@ class Informant():
 
         self.displayLoadingScreen()
 
-        loadedModules = [weather.WeatherModule()]
+        loadedModules = [bingbg.BingBGModule(), weather.WeatherModule()]
 
         while True:
             for event in pygame.event.get():
