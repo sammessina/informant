@@ -7,7 +7,7 @@ from time import strftime, localtime
 import pygame
 from pygame.locals import *
 
-from render import TextImg, MultiColoredTextImg, ScreenInfo
+from render import TextImg, MultiColoredTextImg, ScreenInfo, OutlinedTextImg
 from modules import weather, bingbg
 
 
@@ -35,7 +35,12 @@ class Informant():
         pygame.mouse.set_visible(False)
         pygame.display.set_caption('Clock')
 
-        clock = MultiColoredTextImg(pygame.font.Font("NixieOne-Regular.otf", 500), ("white", "gray", "white"))
+        clockfont = pygame.font.Font("NixieOne-Regular.otf", 500)
+        clock = MultiColoredTextImg(parts=[
+            OutlinedTextImg(font=clockfont),
+            OutlinedTextImg(font=clockfont, color="gray"),
+            OutlinedTextImg(font=clockfont)
+        ])
         clock.set_text(1, ":")
 
         random.seed()

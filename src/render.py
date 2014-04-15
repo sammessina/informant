@@ -4,13 +4,34 @@ from pygame.locals import Color
 __author__ = 'Sam'
 
 
-class TextImg():
+class TextRendererBase():
+    def __init__(self):
+        self._image = None
+        self._rect = None
+
+    def _render(self):
+        self._rect = self._image.get_rect()
+
+    def render(self, screen, x, y, text=None):
+        pass
+
+    def render_width(self):
+        if self._image is None:
+            self._render()
+        return self._rect.width
+
+    def render_height(self):
+        if self._image is None:
+            self._render()
+        return self._rect.height
+
+
+class TextImg(TextRendererBase):
     def __init__(self, font=None, color="white", size=32):
+        TextRendererBase.__init__(self)
         self._color = Color(color)
         self._text = None
         self._font = font if font is not None else pygame.font.Font(pygame.font.match_font('Arial'), size)
-        self._image = None
-        self._rect = None
 
     def _render(self):
         self._image = self._font.render(self._text, True, self._color)
@@ -33,24 +54,17 @@ class TextImg():
         self._rect.topleft = (x, y)
         screen.blit(self._image, self._rect)
 
-    def render_width(self):
-        if self._image is None:
-            self._render()
-        return self._rect.width
-
-    def render_height(self):
-        if self._image is None:
-            self._render()
-        return self._rect.height
-
 
 class MultiColoredTextImg():
-    def __init__(self, font=None, colors=()):
-        self._parts = []
+    def __init__(self, font=None, colors=(), parts=None):
         self.width = 0
         self.height = 0
-        for color in colors:
-            self._parts.append(TextImg(font, color))
+        if parts is not None:
+            self._parts = parts
+        else:
+            self._parts = []
+            for color in colors:
+                self._parts.append(TextImg(font, color))
 
     def set_text(self, index, text):
         self._parts[index].set_text(text)
@@ -68,10 +82,9 @@ class MultiColoredTextImg():
             offset += part.render_width()
 
 
-class OutlinedTextImg():
+class OutlinedTextImg(TextRendererBase):
     def __init__(self, font=None, color="white", size=32, outercolor="black", outlinesize=1):
-        self._image = None
-        self._rect = None
+        TextRendererBase.__init__(self)
         self._outlinesize = outlinesize
         self._inner_text = TextImg(font, color, size)
         self._outer_text = TextImg(font, outercolor, size)
@@ -99,16 +112,6 @@ class OutlinedTextImg():
             self._render()
         self._rect.topleft = (x, y)
         screen.blit(self._image, self._rect)
-
-    def render_width(self):
-        if self._image is None:
-            self._render()
-        return self._rect.width
-
-    def render_height(self):
-        if self._image is None:
-            self._render()
-        return self._rect.height
 
 
 class ScreenInfo():
