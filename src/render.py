@@ -75,7 +75,8 @@ class OutlinedTextImg():
         self._outer_text = TextImg(font, outercolor, size)
 
     def _render(self):
-        self._image = pygame.Surface((self._inner_text.render_width() + 2, self._inner_text.render_height() + 2))
+        self._image = pygame.Surface((self._inner_text.render_width() + 2, self._inner_text.render_height() + 2), pygame.SRCALPHA)
+        self._image.set_alpha(0)
         self._outer_text.render(self._image, 0, 0)
         self._outer_text.render(self._image, 0, 2)
         self._outer_text.render(self._image, 2, 0)
