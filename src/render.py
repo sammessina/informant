@@ -132,7 +132,7 @@ class Gradient():
             color.b = int((topcolor.b * (1 - scale)) + (bottomcolor.b * scale))
             color.a = int((topcolor.a * (1 - scale)) + (bottomcolor.a * scale))
             pygame.draw.line(self._image, color, (0, y), (width - 1, y))
-            if y % 10 == 0:
+            if y % 10 == 3:
                 TextImg().render(self._image, y*5, y/2, "%d" % (int((topcolor.r * (1 - scale)) + (bottomcolor.r * scale))))
 
     def render(self, screen, x, y):
