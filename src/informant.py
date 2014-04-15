@@ -13,7 +13,7 @@ from modules import weather, bingbg
 
 class Informant():
     BOTTOM_PANEL_HEIGHT_PX = 300
-    FPS_TARGET = 3
+    FPS_TARGET = 2
 
     def __init__(self):
         self.screen = None
@@ -87,7 +87,7 @@ class Informant():
                 time_x = random.randrange(max(1, self.screen_info.width - clock.width))
                 time_y = random.randrange(max(1, self.screen_info.height - clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
-            fps = int(fpsClock.get_fps())
+            fps = float(fpsClock.get_fps())
             if fps < int(.85 * self.FPS_TARGET):
                 fpsLabel.render(self.screen, 0, 0, str(fps) + " FPS")
             pygame.display.update()
