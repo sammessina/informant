@@ -38,7 +38,7 @@ class WeatherModule(Module):
         if self._i > 180 * 30:
             self.get_weather()
         if self._gradient is None:
-            self._gradient = render.Gradient(screen_info.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0), pygame.Color(0, 0, 0, 255))
+            self._gradient = render.Gradient(screen_info.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0), pygame.Color(255, 0, 0, 255))
 
         self._gradient.render(screen, 0, screen_info.height - self.GRADIENT_SIZE)
         self.temp_label.render(screen, screen_info.width - 500, screen_info.height - 150, self.temp_f)
