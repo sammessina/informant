@@ -69,19 +69,22 @@ class MultiColoredTextImg():
 
 
 class OutlinedTextImg():
-    def __init__(self, font=None, color="white", size=32, outercolor="black"):
+    def __init__(self, font=None, color="white", size=32, outercolor="black", outlinesize=1):
         self._image = None
+        self._rect = None
+        self._outlinesize = outlinesize
         self._inner_text = TextImg(font, color, size)
         self._outer_text = TextImg(font, outercolor, size)
 
     def _render(self):
-        self._image = pygame.Surface((self._inner_text.render_width() + 2, self._inner_text.render_height() + 2), pygame.SRCALPHA)
+        self._image = pygame.Surface((self._inner_text.render_width() + 2 * self._outlinesize,
+                                      self._inner_text.render_height() + 2 * self._outlinesize), pygame.SRCALPHA)
         self._image.set_alpha(0)
-        self._outer_text.render(self._image, 0, 0)
-        self._outer_text.render(self._image, 0, 2)
-        self._outer_text.render(self._image, 2, 0)
-        self._outer_text.render(self._image, 2, 2)
-        self._inner_text.render(self._image, 1, 1)
+        for x in range(0, 2 + 1):
+            for y in range(0, 2 + 1):
+                if not (x == 1 and y == 1):
+                    self._outer_text.render(self._image, x * self._outlinesize, y * self._outlinesize)
+        self._inner_text.render(self._image, self._outlinesize, self._outlinesize)
         self._rect = self._image.get_rect()
 
     def set_text(self, text):
