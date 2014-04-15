@@ -8,7 +8,7 @@ import pygame
 from pygame.locals import *
 
 from render import TextImg, MultiColoredTextImg, ScreenInfo
-from modules import weather
+from modules import weather, bingbg
 
 
 class Informant():
@@ -52,7 +52,7 @@ class Informant():
 
         self.displayLoadingScreen()
 
-        loadedModules = [weather.WeatherModule()]
+        loadedModules = [bingbg.BingBGModule(), weather.WeatherModule()]
 
         while True:
             for event in pygame.event.get():
@@ -72,15 +72,15 @@ class Informant():
             clock.set_text(0, str(int(strftime("%I", thetime))))
             clock.set_text(2, minute)
 
+            for module in loadedModules:
+                module.render(self.screen, self.screen_info)
+
             clock.render(self.screen, time_x, time_y)
             # todo ugly bug: first frame will be at wrong coord
             if minute != last_minute:
                 last_minute = minute
                 time_x = random.randrange(max(1, self.screen_info.width - clock.width))
                 time_y = random.randrange(max(1, self.screen_info.height - clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
-
-            for module in loadedModules:
-                module.render(self.screen, self.screen_info)
 
             fps = int(fpsClock.get_fps())
             if fps < int(.85 * self.FPS_TARGET):

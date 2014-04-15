@@ -3,15 +3,9 @@ import json
 import os
 
 import render
+#import render.Module as Module
+from render import Module
 import pygame
-
-
-class Module():
-    def __init__(self):
-        pass
-
-    def render(self, screen, screen_info):
-        pass
 
 
 class WeatherModule(Module):
