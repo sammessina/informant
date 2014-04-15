@@ -89,6 +89,6 @@ class Informant():
 
             fps = float(fpsClock.get_fps())
             if fps < int(.85 * self.FPS_TARGET):
-                fpsLabel.render(self.screen, 0, 0, str(fps) + " FPS")
+                fpsLabel.render(self.screen, 0, 0, "%.1f FPS" % fps)
             pygame.display.update()
             fpsClock.tick(self.FPS_TARGET)

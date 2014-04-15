@@ -42,6 +42,9 @@ class TextImg(TextRendererBase):
             self._text = str(text)
             self._image = None
 
+    def get_text(self):
+        return self._text
+
     def set_color(self, color):
         self._color = Color(color)
         self._image = None
@@ -101,6 +104,8 @@ class OutlinedTextImg(TextRendererBase):
         self._rect = self._image.get_rect()
 
     def set_text(self, text):
+        if self._inner_text.get_text() == text:
+            return
         self._image = None
         self._inner_text.set_text(text)
         self._outer_text.set_text(text)
