@@ -42,6 +42,6 @@ class WeatherModule(Module):
 
         self._gradient.render(screen, 0, screen_info.height - self.GRADIENT_SIZE)
         self.temp_label.render(screen, screen_info.width - 500, screen_info.height - 150, self.temp_f)
-        self.weather_label.render(screen, 500, screen_info.height - 150)
+        self.weather_label.render(screen, 250, screen_info.height - 150)
         if self.img is not None:
             screen.blit(self.img, (100, screen_info.height - 150))
