@@ -11,8 +11,8 @@ import pygame
 class WeatherModule(Module):
     def __init__(self):
         Module.__init__(self)
-        self.temp_label = render.TextImg(color="#cccccc", size=50)
-        self.weather_label = render.TextImg(color="#cccccc", size=40)
+        self.temp_label = render.TextImg(color="#000000", size=50)
+        self.weather_label = render.TextImg(color="#000000", size=40)
         self.img = None
         self.temp_f = 999
         self._i = 0
