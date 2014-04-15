@@ -3,6 +3,7 @@ from pygame.locals import Color
 
 __author__ = 'Sam'
 
+#todo: port to https://github.com/tipam/pi3d
 
 class TextRendererBase():
     def __init__(self):
