@@ -8,7 +8,7 @@ import pygame
 from pygame.locals import *
 
 from render import TextImg, MultiColoredTextImg, ScreenInfo, OutlinedTextImg
-from modules import weather, bingbg
+from modules import weather, bingbg, network
 
 
 class Informant():
@@ -57,7 +57,7 @@ class Informant():
 
         self.displayLoadingScreen()
 
-        loadedModules = [bingbg.BingBGModule(), weather.WeatherModule()]
+        loadedModules = [bingbg.BingBGModule(), weather.WeatherModule(), network.NetworkModule()]
 
         while True:
             for event in pygame.event.get():
