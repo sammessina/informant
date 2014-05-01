@@ -10,6 +10,7 @@
 #       using the args: run <origindir>
 
 #fixme: this file keeps getting erased on shutdown and I don't know why. workaround is to run the following cmd on boot
+# A workaround: launch the file from the terminal instead of directly
 # To reset during testing: git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
 
 # local vars
