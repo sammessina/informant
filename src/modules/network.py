@@ -44,7 +44,5 @@ class NetworkModule(Module):
             self.get_time()
         if self._net_error:
             self.label.render(screen, screen_info.width - 450, screen_info.height - 150, "Network Error")
-        if self._api_error:
-            self.label.render(screen, screen_info.width - 450, screen_info.height - 350, "API Error")
         if abs(self._offset) > 60:
             self.label.render(screen, screen_info.width - 450, screen_info.height - 550, "Time Offset")
