@@ -43,4 +43,4 @@ class NetworkModule(Module):
         if self._i > 180 * 30:
             self.get_time()
         if abs(self._offset) > 60:
-            self.label.render(screen, screen_info.width - 450, screen_info.height - 550, "Time Offset")
+            self.label.render(screen, screen_info.width - 450, screen_info.height - 550, "Time Incorrect")
