@@ -1,4 +1,4 @@
-import urllib
+import urllib2
 import json
 import os
 import time
@@ -28,7 +28,7 @@ class WeatherModule(Module):
         try:
             self._i = 0
             url = 'http://api.wunderground.com/api/c5cec5a481c71293/conditions/q/98052.json'
-            result = json.load(urllib.urlopen(url))
+            result = json.load(urllib2.urlopen(url, timeout=120))
             self.temp_f = "%.1f F" % result['current_observation']['temp_f']
             #a/b/nt_clear.gif -> nt_clear
             icon = os.path.splitext(os.path.basename(result['current_observation']['icon_url']))[0]

@@ -27,7 +27,7 @@ class NetworkModule(Module):
             self._api_error = False
             self._i = 0
             url = 'http://www.timeapi.org/utc/now'
-            response = urllib2.urlopen(url).read()
+            response = urllib2.urlopen(url, timeout=120).read()
             result = time.strptime(response, "%Y-%m-%dT%H:%M:%S+00:00")
             self._offset = calendar.timegm(time.gmtime()) - calendar.timegm(result)
         except (urllib2.HTTPError, urllib2.URLError, httplib.HTTPException) as e:

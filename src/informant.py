@@ -21,8 +21,8 @@ class Informant():
 
     def displayLoadingScreen(self):
         self.screen.fill(Color("black"))
-        label = TextImg(size=80, color="#181818")
-        label.set_text("informantboard")
+        label = TextImg(size=80, color="#222222")
+        label.set_text("loading")
         label.render(self.screen, (self.screen_info.width - label.render_width()) / 2,
                      (self.screen_info.height - label.render_height()) / 2)
         pygame.display.update()

@@ -1,4 +1,4 @@
-import urllib
+import urllib2
 import json
 import os
 import StringIO
@@ -20,9 +20,9 @@ class BingBGModule(Module):
         try:
             self._i = 0
             url = 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
-            result = json.load(urllib.urlopen(url))
+            result = json.load(urllib2.urlopen(url, timeout=120))
             self.img_url = "http://www.bing.com%s" % result['images'][0]['url']
-            f = StringIO.StringIO(urllib.urlopen(self.img_url).read())
+            f = StringIO.StringIO(urllib2.urlopen(self.img_url, timeout=120).read())
             img_raw = pygame.image.load(f, self.img_url).convert()
 
             # resize image to fill screen
