@@ -7,13 +7,13 @@ import os
 
 import render
 #import render.Module as Module
-from render import Module
+from src import render
 import pygame
 
 
-class NetworkModule(Module):
-    def __init__(self):
-        Module.__init__(self)
+class NetworkModule(render.Module):
+    def __init__(self, screen_info):
+        render.Module.__init__(self, screen_info)
         self.label = render.OutlinedTextImg(color="red", outlinesize=2, size=60)
         self._i = 0
         self._net_error = False

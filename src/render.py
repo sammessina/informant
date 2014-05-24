@@ -1,4 +1,5 @@
 import pygame
+from pygame import constants
 from pygame.locals import Color
 
 __author__ = 'Sam'
@@ -30,12 +31,15 @@ class TextRendererBase():
 class TextImg(TextRendererBase):
     def __init__(self, font=None, color="white", size=32):
         TextRendererBase.__init__(self)
-        self._color = Color(color)
+        self._color = color
+        if isinstance(color, basestring):
+            self._color = Color(color)
         self._text = None
         self._font = font if font is not None else pygame.font.Font(pygame.font.match_font('Arial'), size)
 
     def _render(self):
         self._image = self._font.render(self._text, True, self._color)
+        self._image.set_alpha(self._color.a)  # todo - this doesn't work?
         self._rect = self._image.get_rect()
 
     def set_text(self, text):
@@ -56,7 +60,7 @@ class TextImg(TextRendererBase):
         if self._image is None:
             self._render()
         self._rect.topleft = (x, y)
-        screen.blit(self._image, self._rect)
+        screen.blit(self._image, self._rect, special_flags=0)
 
 
 class MultiColoredTextImg():
@@ -146,7 +150,7 @@ class ScreenInfo():
 
 
 class Module():
-    def __init__(self):
+    def __init__(self, screen_info):
         pass
 
     def render(self, screen, screen_info):

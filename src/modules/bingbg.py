@@ -3,18 +3,21 @@ import json
 import os
 import StringIO
 
-import render
-from render import Module
 import pygame
+from src import render
 
 
-class BingBGModule(Module):
-    def __init__(self):
-        Module.__init__(self)
+class BingBGModule(render.Module):
+    GRADIENT_SIZE = 300
+
+    def __init__(self, screen_info):
+        render.Module.__init__(self, screen_info)
         self._i = -2
         self.img = None
         self.img_url = None
         self.img_rect = None
+        self._gradient = render.Gradient(screen_info.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
+                                         pygame.Color(0, 0, 0, 255))
 
     def get_bg(self, screen_info):
         try:
@@ -47,3 +50,4 @@ class BingBGModule(Module):
             screen.blit(self.img,
                         (int((screen_info.width - self.img_rect.width) / 2),
                          int((screen_info.height - self.img_rect.height) / 2)))
+            self._gradient.render(screen, 0, screen_info.height - self.GRADIENT_SIZE)
