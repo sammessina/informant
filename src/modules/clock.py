@@ -15,7 +15,7 @@ class ClockModule(render.Module):
 
     def __init__(self, screen_info):
         render.Module.__init__(self, screen_info)
-        self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(screen_info.height * .6))
+        self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(screen_info.height * .65))
         outline = pygame.Color(0, 0, 0, 127)
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline),
