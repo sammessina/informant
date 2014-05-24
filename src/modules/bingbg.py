@@ -4,7 +4,7 @@ import os
 import StringIO
 
 import pygame
-from src import render
+import render
 
 
 class BingBGModule(render.Module):

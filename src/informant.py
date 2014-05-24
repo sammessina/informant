@@ -44,7 +44,7 @@ class Informant():
 
         loaded_modules = [
             bingbg.BingBGModule(self.screen_info),
-        #    weather.WeatherModule(self.screen_info),
+            weather.WeatherModule(self.screen_info),
             network.NetworkModule(self.screen_info),
             clock.ClockModule(self.screen_info)
         ]

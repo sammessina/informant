@@ -7,7 +7,7 @@ import os
 
 import render
 #import render.Module as Module
-from src import render
+import render
 import pygame
 
 

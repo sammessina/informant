@@ -7,7 +7,7 @@ import time
 import os
 
 import pygame
-from src import render
+import render
 
 
 class ClockModule(render.Module):
