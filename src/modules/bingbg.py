@@ -20,12 +20,22 @@ class BingBGModule(render.Module):
                                          pygame.Color(0, 0, 0, 255))
 
     def get_bg(self, screen_info):
+        resolutions = ["1920x1080", "1920x1200", "1366x768"]
         try:
             self._i = 0
             url = 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
             result = json.load(urllib2.urlopen(url, timeout=120))
             self.img_url = "http://www.bing.com%s" % result['images'][0]['url']
-            f = StringIO.StringIO(urllib2.urlopen(self.img_url, timeout=120).read())
+            f = ''
+            for resolution in resolutions:
+                new_url = self.img_url.replace("1366x768", resolution, 1)
+                try:
+                    f = StringIO.StringIO(urllib2.urlopen(new_url, timeout=120).read())
+                    break
+                except:
+                    pass
+            if f == '':
+                return
             img_raw = pygame.image.load(f, self.img_url).convert()
 
             # resize image to fill screen
@@ -38,7 +48,7 @@ class BingBGModule(render.Module):
             img_raw = pygame.transform.smoothscale(img_raw, (new_width, new_height))
             self.img = img_raw
             self.img_rect = self.img.get_rect()
-        except Exception as e:
+        except:
             pass
 
     def render(self, screen, screen_info):
