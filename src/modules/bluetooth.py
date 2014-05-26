@@ -15,6 +15,8 @@ class BluetoothModule(render.Module):
         self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
         try:
             self.bluetooth_address = context.config.get("Informant", "bluetooth")
+            if len(self.bluetooth_address) == 0:
+                self.bluetooth_address = None
         except:
             self.bluetooth_address = None
         # hack to make scanning happen soon after boot (but not directly at boot)
@@ -33,7 +35,7 @@ class BluetoothModule(render.Module):
             else:
                 self.bluetooth_device_found = 2
         except:
-            self.bluetooth_device_found = "Unexpected error: " + sys.exc_info()[0]
+            self.bluetooth_device_found = "Unexpected error: " + str(sys.exc_info()[0])
 
     def render(self, screen, context):
         self._i += 1
