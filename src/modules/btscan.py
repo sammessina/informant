@@ -1,12 +1,10 @@
 import sys
 import render
-
-bluetooth = None
 try:
     import bluetooth
-
     bluetooth_available = True
 except ImportError:
+    bluetooth = None
     bluetooth_available = False
 
 

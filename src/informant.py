@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import *
 
 from render import TextImg, MultiColoredTextImg, InformantContext, OutlinedTextImg
-from modules import weather, bingbg, network, clock, bluetooth
+from modules import weather, bingbg, network, clock, btscan
 
 
 class Informant():
@@ -47,7 +47,7 @@ class Informant():
         loaded_modules = [
             bingbg.BingBGModule(self.context),
             weather.WeatherModule(self.context),
-            bluetooth.BluetoothModule(self.context),
+            btscan.BluetoothModule(self.context),
             network.NetworkModule(self.context),
             clock.ClockModule(self.context)
         ]
