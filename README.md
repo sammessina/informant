@@ -24,6 +24,8 @@ An information board designed to be easy to set up and use.
     * Expand root fs
     * Finish
   * Config wifi if needed
+  * Install PyBluez to enable bluetooth device detection
+    * sudo apt-get install bluez python-bluez
 2.5. (Future/Todo) For graphic acceleration, the Python Imaging Library must be installed
   * Add to config.txt: gpu_mem=128
   * sudo apt-get install python-imaging

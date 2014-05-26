@@ -1,10 +1,5 @@
-import time
-import urllib2
-import json
-import os
-import time
+import sys
 import render
-import pygame
 
 try:
     import bluetooth
@@ -29,7 +24,7 @@ class BluetoothModule(render.Module):
         self.bluetooth_device_found = -1
 
     def scan(self):
-        if self.bluetooth_address is None:
+        if not bluetooth_available or self.bluetooth_address is None:
             return
         try:
             result = bluetooth.lookup_name(self.bluetooth_address, timeout=5)
@@ -38,7 +33,7 @@ class BluetoothModule(render.Module):
             else:
                 self.bluetooth_device_found = 2
         except:
-            self.bluetooth_device_found = 0
+            self.bluetooth_device_found = "Unexpected error: " + sys.exc_info()[0]
 
     def render(self, screen, context):
         self._i += 1
@@ -47,7 +42,7 @@ class BluetoothModule(render.Module):
             self._i = 0
             self.scan()
 
-        str = ""
+        str = self.bluetooth_device_found
         if not bluetooth_available:
             str = "BT Unavailable"
         elif self.bluetooth_device_found == 0:
