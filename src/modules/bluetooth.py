@@ -51,7 +51,7 @@ class BluetoothModule(render.Module):
         if not bluetooth_available:
             str = "BT Unavailable"
         elif self.bluetooth_device_found == 0:
-            str = "BT Scan failed"
+            str = "BT Scan failed (%s)" % self.bluetooth_address
         elif self.bluetooth_device_found == 1:
             str = "BT Not found"
         elif self.bluetooth_device_found == 0:
