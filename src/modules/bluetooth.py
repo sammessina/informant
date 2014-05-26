@@ -17,7 +17,7 @@ except ImportError:
 class BluetoothModule(render.Module):
     def __init__(self, context):
         render.Module.__init__(self, context)
-        self.status_label = render.OutlinedTextImg(color="blue", outlinesize=2, size=20)
+        self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
         try:
             self.bluetooth_address = context.config.get("Informant", "bluetooth")
         except:
@@ -26,7 +26,7 @@ class BluetoothModule(render.Module):
         # will be removed after threading implemented
         self._i = 85
         # 0=scan failed, 1=not found, 2=found
-        self.bluetooth_device_found = 0
+        self.bluetooth_device_found = -1
 
     def scan(self):
         if self.bluetooth_address is None:
