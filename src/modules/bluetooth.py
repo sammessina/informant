@@ -34,8 +34,8 @@ class BluetoothModule(render.Module):
                 self.bluetooth_device_found = 1
             else:
                 self.bluetooth_device_found = 2
-        except:
-            self.bluetooth_device_found = "Unexpected error: " + str(sys.exc_info()[0])
+        except Exception as e:
+            self.bluetooth_device_found = "Unexpected error: " + str(e)
 
     def render(self, screen, context):
         self._i += 1
