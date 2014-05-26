@@ -1,6 +1,7 @@
 import sys
 import render
 
+bluetooth = None
 try:
     import bluetooth
 
