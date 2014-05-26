@@ -22,7 +22,9 @@ class BluetoothModule(render.Module):
             self.bluetooth_address = context.config.get("Informant", "bluetooth")
         except:
             self.bluetooth_address = None
-        self._i = 0
+        # hack to make scanning happen soon after boot (but not directly at boot)
+        # will be removed after threading implemented
+        self._i = 85
         # 0=scan failed, 1=not found, 2=found
         self.bluetooth_device_found = 0
 
