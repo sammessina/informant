@@ -143,16 +143,17 @@ class Gradient():
         screen.blit(self._image, self._rect)
 
 
-class ScreenInfo():
+class InformantContext():
     def __init__(self):
         self.width = 0
         self.height = 0
+        self.config = None
 
 
 class Module():
-    def __init__(self, screen_info):
+    def __init__(self, context):
         pass
 
-    def render(self, screen, screen_info):
+    def render(self, screen, context):
         pass
 

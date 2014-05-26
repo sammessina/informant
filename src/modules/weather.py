@@ -2,16 +2,13 @@ import urllib2
 import json
 import os
 import time
-
-import render
-#import render.Module as Module
 import render
 import pygame
 
 
 class WeatherModule(render.Module):
-    def __init__(self, screen_info):
-        render.Module.__init__(self, screen_info)
+    def __init__(self, context):
+        render.Module.__init__(self, context)
         self.temp_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=50)
         self.updated_label = render.TextImg(color="#ffffff", size=20)
@@ -35,15 +32,15 @@ class WeatherModule(render.Module):
         except Exception as e:
             self.temp_f = "%s" % e
 
-    def render(self, screen, screen_info):
+    def render(self, screen, context):
         self._i += 1
         if self._i > 180 * 30:
             self.get_weather()
 
-        self.temp_label.render(screen, screen_info.width - 500, screen_info.height - 150, self.temp_f)
-        self.weather_label.render(screen, 250, screen_info.height - 150)
+        self.temp_label.render(screen, context.width - 500, context.height - 150, self.temp_f)
+        self.weather_label.render(screen, 250, context.height - 150)
         if self._updated_time is not None:
-            self.updated_label.render(screen, 50, screen_info.height - 50,
+            self.updated_label.render(screen, 50, context.height - 50,
                                       "Updated " + str(int((time.time() - self._updated_time) / 60)) + " min ago")
         if self.img is not None:
-            screen.blit(self.img, (100, screen_info.height - 150))
+            screen.blit(self.img, (100, context.height - 150))

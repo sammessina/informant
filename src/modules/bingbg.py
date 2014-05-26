@@ -1,6 +1,5 @@
 import urllib2
 import json
-import os
 import StringIO
 
 import pygame
@@ -10,13 +9,13 @@ import render
 class BingBGModule(render.Module):
     GRADIENT_SIZE = 300
 
-    def __init__(self, screen_info):
-        render.Module.__init__(self, screen_info)
+    def __init__(self, context):
+        render.Module.__init__(self, context)
         self._i = -2
         self.img = None
         self.img_url = None
         self.img_rect = None
-        self._gradient = render.Gradient(screen_info.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
+        self._gradient = render.Gradient(context.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
                                          pygame.Color(0, 0, 0, 255))
 
     def get_bg(self, screen_info):
@@ -51,13 +50,13 @@ class BingBGModule(render.Module):
         except:
             pass
 
-    def render(self, screen, screen_info):
+    def render(self, screen, context):
         self._i += 1
         # Grab image once every 8 hours
         if self._i == -1 or self._i > 8 * 60 * 120:
-            self.get_bg(screen_info)
+            self.get_bg(context)
         if self.img is not None:
             screen.blit(self.img,
-                        (int((screen_info.width - self.img_rect.width) / 2),
-                         int((screen_info.height - self.img_rect.height) / 2)))
-            self._gradient.render(screen, 0, screen_info.height - self.GRADIENT_SIZE)
+                        (int((context.width - self.img_rect.width) / 2),
+                         int((context.height - self.img_rect.height) / 2)))
+            self._gradient.render(screen, 0, context.height - self.GRADIENT_SIZE)
