@@ -21,8 +21,8 @@ class BluetoothModule(render.Module):
         # hack to make scanning happen soon after boot (but not directly at boot)
         # will be removed after threading implemented
         self._i = 85
-        # 0=scan failed, 1=not found, 2=found
-        self.bluetooth_device_found = -1
+        # -1=scan failed, 0=not scanned, 1=not found, 2=found
+        self.bluetooth_device_found = 0
 
     def scan(self):
         if not bluetooth_available or self.bluetooth_address is None:
@@ -33,8 +33,8 @@ class BluetoothModule(render.Module):
                 self.bluetooth_device_found = 1
             else:
                 self.bluetooth_device_found = 2
-        except Exception as e:
-            self.bluetooth_device_found = "Unexpected error: " + str(e)
+        except:
+            self.bluetooth_device_found = -1
 
     def render(self, screen, context):
         self._i += 1
@@ -43,14 +43,16 @@ class BluetoothModule(render.Module):
             self._i = 0
             self.scan()
 
-        str = self.bluetooth_device_found
+        str = ""
         if not bluetooth_available:
-            str = "BT Unavailable"
+            str = "BT Not installed"
+        elif self.bluetooth_device_found == -1:
+            str = "BT Scan failed"
         elif self.bluetooth_device_found == 0:
-            str = "BT Scan failed (%s)" % self.bluetooth_address
+            str = "BT Scan pending"
         elif self.bluetooth_device_found == 1:
             str = "BT Not found"
-        elif self.bluetooth_device_found == 0:
+        elif self.bluetooth_device_found == 2:
             str = "BT Device found"
 
         self.status_label.render(screen, 300, context.height - 50, str)
