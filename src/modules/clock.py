@@ -39,17 +39,16 @@ class ClockModule(render.Module):
         self._i += 10
         thetime = time.localtime()  # place self._i in parens for test mode
         minute = time.strftime("%M", thetime)
-        self.clock.set_text(0, str(int(time.strftime("%I", thetime))))
-        self.clock.set_text(2, minute)
 
         # todo ugly bug: first frame will be at wrong coord
         # actually it's kind of nice when the time changes and .5 seconds later moves
         if minute != self.last_minute:
-            self.wacky_colors()
+            self.wacky_colors()  # todo: do this only if specified in config
+            self.clock.set_text(0, str(int(time.strftime("%I", thetime))))
+            self.clock.set_text(2, minute)
             self.last_minute = minute
             self.time_x = random.randrange(max(1, context.width - self.clock.width))
-            self.time_y = random.randrange(
-                max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
+            self.time_y = random.randrange(max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
         self.clock.render(screen, self.time_x, self.time_y)
         date_str = datetime.datetime.now().strftime("%a, %b %d")
