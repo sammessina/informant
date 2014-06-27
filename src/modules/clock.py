@@ -25,6 +25,16 @@ class ClockModule(render.Module):
         self.last_minute = -1
         random.seed()
 
+    def wacky_colors(self):
+        color = pygame.Color(random.randint(100, 255), random.randint(100, 255), random.randint(100, 255))
+        outline = pygame.Color(0, 0, 0, 127)
+        self.clock = render.MultiColoredTextImg(parts=[
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2)
+        ])
+        self.clock.set_text(1, ":")
+
     def render(self, screen, context):
         self._i += 10
         thetime = time.localtime()  # place self._i in parens for test mode
@@ -35,6 +45,7 @@ class ClockModule(render.Module):
         # todo ugly bug: first frame will be at wrong coord
         # actually it's kind of nice when the time changes and .5 seconds later moves
         if minute != self.last_minute:
+            self.wacky_colors()
             self.last_minute = minute
             self.time_x = random.randrange(max(1, context.width - self.clock.width))
             self.time_y = random.randrange(
