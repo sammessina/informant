@@ -37,10 +37,14 @@ class WeatherModule(render.Module):
         if self._i > 180 * 30:
             self.get_weather()
 
-        self.temp_label.render(screen, context.width - 500, context.height - 150, self.temp_f)
-        self.weather_label.render(screen, 250, context.height - 150)
+        # temperature
+        self.temp_label.render(screen, 50, context.height - 150, self.temp_f)
+        # icon
+        if self.img is not None:
+            screen.blit(self.img, (150, context.height - 150))
+        # temperature string
+        self.weather_label.render(screen, 300, context.height - 150)
         if self._updated_time is not None:
             self.updated_label.render(screen, 50, context.height - 50,
                                       "Updated " + str(int((time.time() - self._updated_time) / 60)) + " min ago")
-        if self.img is not None:
-            screen.blit(self.img, (100, context.height - 150))
+

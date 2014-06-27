@@ -17,6 +17,7 @@ class ClockModule(render.Module):
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, outlinesize=2)
         ])
+        self.date_label = render.OutlinedTextImg(color="#ffffff", size=50)
         self.clock.set_text(1, ":")
         self._i = 0
         self.time_x = 0
@@ -40,3 +41,5 @@ class ClockModule(render.Module):
                 max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
         self.clock.render(screen, self.time_x, self.time_y)
+        date_str = time.strftime("%a, %b %d")
+        self.date_label.render(screen, context.width - 500, context.height - 150, time)
