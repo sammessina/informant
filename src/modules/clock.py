@@ -1,6 +1,6 @@
 import random
 import datetime
-
+import time
 import pygame
 import render
 
