@@ -1,5 +1,7 @@
 import sys
+import subprocess
 import render
+
 try:
     import bluetooth
     bluetooth_available = True
@@ -11,6 +13,7 @@ except ImportError:
 class BluetoothModule(render.Module):
     def __init__(self, context):
         render.Module.__init__(self, context)
+        self.monitor_is_on = True
         self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
         try:
             self.bluetooth_address = context.config.get("Informant", "bluetooth")
@@ -23,6 +26,16 @@ class BluetoothModule(render.Module):
         self._i = 85
         # -1=scan failed, 0=not scanned, 1=not found, 2=found
         self.bluetooth_device_found = 0
+
+    def monitor_off(self):
+        if self.monitor_is_on:
+            subprocess.call("tvservice -o", shell=True)
+            self.monitor_is_on = False
+
+    def monitor_on(self):
+        if not self.monitor_is_on:
+            subprocess.call("tvservice -p && chvt 6 && chvt 7", shell=True)
+            self.monitor_is_on = True
 
     def scan(self):
         if not bluetooth_available or self.bluetooth_address is None:

@@ -14,7 +14,7 @@ class Informant():
         self.screen = None
         self.context = InformantContext()
 
-    def displayLoadingScreen(self):
+    def display_loading_screen(self):
         self.screen.fill(Color("black"))
         label = TextImg(size=80, color="#222222")
         label.set_text("loading")
@@ -41,7 +41,7 @@ class Informant():
 
         fps_label = TextImg(color="red")
 
-        self.displayLoadingScreen()
+        self.display_loading_screen()
         self.read_config()
 
         loaded_modules = [
@@ -68,7 +68,7 @@ class Informant():
                 module.render(self.screen, self.context)
 
             fps = float(fps_clock.get_fps())
-            if fps < int(.85 * self.FPS_TARGET):
+            if fps < int(.85 * self.FPS_TARGET) - .5:
                 fps_label.render(self.screen, 0, 0, "%.1f FPS" % fps)
             pygame.display.update()
             fps_clock.tick(self.FPS_TARGET)

@@ -21,7 +21,6 @@ class BingBGModule(render.Module):
     def get_bg(self, screen_info):
         resolutions = ["1920x1080", "1920x1200", "1366x768"]
         try:
-            self._i = 0
             url = 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
             result = json.load(urllib2.urlopen(url, timeout=120))
             self.img_url = "http://www.bing.com%s" % result['images'][0]['url']
@@ -52,9 +51,11 @@ class BingBGModule(render.Module):
 
     def render(self, screen, context):
         self._i += 1
-        # Grab image once every 8 hours
-        if self._i == -1 or self._i > 8 * 60 * 120:
+        # Grab image once every 2 hours
+        if self._i == -1 or self._i > 2 * 60 * 120:
+            self._i = 0
             self.get_bg(context)
+
         if self.img is not None:
             screen.blit(self.img,
                         (int((context.width - self.img_rect.width) / 2),
