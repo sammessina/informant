@@ -1,5 +1,5 @@
 import random
-import time
+import datetime
 
 import pygame
 import render
@@ -41,5 +41,5 @@ class ClockModule(render.Module):
                 max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
         self.clock.render(screen, self.time_x, self.time_y)
-        date_str = time.strftime("%a, %b %d")
-        self.date_label.render(screen, context.width - 500, context.height - 150, time)
+        date_str = datetime.datetime.now().strftime("%a, %b %d")
+        self.date_label.render(screen, context.width - 500, context.height - 150, date_str)
