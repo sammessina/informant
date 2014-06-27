@@ -25,7 +25,7 @@ class BluetoothModule(render.Module):
         # will be removed after threading implemented
         self._i = 85
         # -1=scan failed, 0=not scanned, 1=not found, 2=found
-        self.bluetooth_device_found = 0
+        self.bluetooth_status = 0
 
     def monitor_off(self):
         if self.monitor_is_on:
@@ -43,11 +43,11 @@ class BluetoothModule(render.Module):
         try:
             result = bluetooth.lookup_name(self.bluetooth_address, timeout=5)
             if result is None:
-                self.bluetooth_device_found = 1
+                self.bluetooth_status = 1
             else:
-                self.bluetooth_device_found = 2
+                self.bluetooth_status = 2
         except:
-            self.bluetooth_device_found = -1
+            self.bluetooth_status = -1
 
     def render(self, screen, context):
         self._i += 1
@@ -56,16 +56,16 @@ class BluetoothModule(render.Module):
             self._i = 0
             self.scan()
 
-        str = ""
+        bt_msg = ""
         if not bluetooth_available:
-            str = "BT Not installed"
-        elif self.bluetooth_device_found == -1:
-            str = "BT Scan failed"
-        elif self.bluetooth_device_found == 0:
-            str = "BT Scan pending"
-        elif self.bluetooth_device_found == 1:
-            str = "BT Not found"
-        elif self.bluetooth_device_found == 2:
-            str = "BT Device found"
+            bt_msg = "BT Software not installed"
+        elif self.bluetooth_status == -1:
+            bt_msg = "" # failed - missing hw?
+        elif self.bluetooth_status == 0:
+            bt_msg = "BT Scan pending"
+        elif self.bluetooth_status == 1:
+            bt_msg = "BT Not found"
+        elif self.bluetooth_status == 2:
+            bt_msg = "BT Device found"
 
-        self.status_label.render(screen, 300, context.height - 50, str)
+        self.status_label.render(screen, 300, context.height - 50, bt_msg)
