@@ -11,13 +11,13 @@ class ClockModule(render.Module):
     def __init__(self, context):
         render.Module.__init__(self, context)
         self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(context.height * .65))
-        outline = pygame.Color(0, 0, 0, 127)
+        outline = pygame.Color(0)
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, outlinesize=2)
         ])
-        self.date_label = render.OutlinedTextImg(color="#ffffff", size=50)
+        self.date_label = render.OutlinedTextImg(color="#ffffff", size=60)
         self.clock.set_text(1, ":")
         self._i = 0
         self.time_x = 0
@@ -26,8 +26,9 @@ class ClockModule(render.Module):
         random.seed()
 
     def wacky_colors(self):
-        color = pygame.Color(random.randint(100, 255), random.randint(100, 255), random.randint(100, 255))
-        outline = pygame.Color(0, 0, 0, 127)
+        color = pygame.Color(0)
+        color.hsva = (random.randint(0, 360), 100, 100, 100)
+        outline = pygame.Color(0)
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
@@ -51,5 +52,6 @@ class ClockModule(render.Module):
             self.time_y = random.randrange(max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
         self.clock.render(screen, self.time_x, self.time_y)
-        date_str = datetime.datetime.now().strftime("%a, %b %d")
-        self.date_label.render(screen, context.width - 500, context.height - 150, date_str)
+        date_str = datetime.datetime.now().strftime("%A, %B %d")
+        self.date_label.set_text(date_str)
+        self.date_label.render(screen, context.width - self.date_label.render_width() - 100, context.height - 150)

@@ -2,6 +2,7 @@ import urllib2
 import json
 import os
 import time
+import informant
 import render
 import pygame
 
@@ -10,7 +11,7 @@ class WeatherModule(render.Module):
     def __init__(self, context):
         render.Module.__init__(self, context)
         self.temp_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
-        self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=50)
+        self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.updated_label = render.TextImg(color="#ffffff", size=20)
         self.img = None
         self.temp_f = 999
@@ -34,16 +35,16 @@ class WeatherModule(render.Module):
 
     def render(self, screen, context):
         self._i += 1
-        if self._i > 180 * 30:
+        if self._i > 30 * (60 * informant.Informant.FPS_TARGET):
             self.get_weather()
 
         # temperature
         self.temp_label.render(screen, 50, context.height - 150, self.temp_f)
         # icon
         if self.img is not None:
-            screen.blit(self.img, (250, context.height - 150))
+            screen.blit(self.img, (300, context.height - 150))
         # temperature string
-        self.weather_label.render(screen, 350, context.height - 150)
+        self.weather_label.render(screen, 450, context.height - 150)
         if self._updated_time is not None:
             self.updated_label.render(screen, 50, context.height - 50,
                                       "Updated " + str(int((time.time() - self._updated_time) / 60)) + " min ago")
