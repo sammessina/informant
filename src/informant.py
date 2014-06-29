@@ -48,7 +48,7 @@ class Informant():
             bingbg.BingBGModule(self.context),
             weather.WeatherModule(self.context),
             btscan.BluetoothModule(self.context),
-            network.NetworkModule(self.context),
+            #network.NetworkModule(self.context),
             clock.ClockModule(self.context)
         ]
 
