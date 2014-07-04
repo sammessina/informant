@@ -10,6 +10,9 @@ import pygame
 class WeatherModule(render.Module):
     def __init__(self, context):
         render.Module.__init__(self, context)
+        self.zip_code = context.config.get("Informant", "zip_code")
+        if len(self.zip_code) == 0:
+            self.bluetooth_address = "98052"
         self.temp_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.updated_label = render.TextImg(color="#ffffff", size=20)
@@ -22,7 +25,7 @@ class WeatherModule(render.Module):
     def get_weather(self):
         try:
             self._i = 0
-            url = 'http://api.wunderground.com/api/c5cec5a481c71293/conditions/q/98052.json'
+            url = 'http://api.wunderground.com/api/c5cec5a481c71293/conditions/q/' + self.zip_code + '.json'
             result = json.load(urllib2.urlopen(url, timeout=120))
             self.temp_f = "%.1f F" % result['current_observation']['temp_f']
             # "a/b/nt_clear.gif" -> "nt_clear"

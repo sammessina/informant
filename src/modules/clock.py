@@ -27,7 +27,8 @@ class ClockModule(render.Module):
 
     def wacky_colors(self):
         color = pygame.Color(0)
-        color.hsva = (random.randint(0, 360), 100, 100, 100)
+        # documentation is wrong about H range. It says [0-360] but 360 causes an OverflowError.
+        color.hsva = (random.randint(0, 359), 100, 100, 100)
         outline = pygame.Color(0)
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),

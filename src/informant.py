@@ -1,10 +1,11 @@
 import sys
 import ConfigParser
+
 import pygame
 from pygame.locals import *
 
-from render import TextImg, MultiColoredTextImg, InformantContext, OutlinedTextImg
-from modules import weather, bingbg, network, clock, btscan
+from render import TextImg, InformantContext
+from modules import weather, bingbg, clock, btscan
 
 
 class Informant():
