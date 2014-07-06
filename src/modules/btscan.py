@@ -1,6 +1,8 @@
-import sys
 import subprocess
+
+from module import Module
 import render
+
 
 try:
     import bluetooth
@@ -10,9 +12,9 @@ except ImportError:
     bluetooth_available = False
 
 
-class BluetoothModule(render.Module):
+class BluetoothModule(Module):
     def __init__(self, context):
-        render.Module.__init__(self, context)
+        Module.__init__(self, context)
         self.monitor_is_on = True
         self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
         try:
@@ -21,23 +23,20 @@ class BluetoothModule(render.Module):
                 self.bluetooth_address = None
         except:
             self.bluetooth_address = None
-        # hack to make scanning happen soon after boot (but not directly at boot)
-        # will be removed after threading implemented
-        self._i = 85
         # -1=scan failed, 0=not scanned, 1=not found, 2=found
         self.bluetooth_status = 0
 
-    def monitor_off(self):
+    def _monitor_off(self):
         if self.monitor_is_on:
             subprocess.call("tvservice -o", shell=True)
             self.monitor_is_on = False
 
-    def monitor_on(self):
+    def _monitor_on(self):
         if not self.monitor_is_on:
             subprocess.call("tvservice -p && chvt 6 && chvt 7", shell=True)
             self.monitor_is_on = True
 
-    def scan(self):
+    def update(self, context):
         if not bluetooth_available or self.bluetooth_address is None:
             return
         try:
@@ -50,12 +49,6 @@ class BluetoothModule(render.Module):
             self.bluetooth_status = -1
 
     def render(self, screen, context):
-        self._i += 1
-        #scan every 3 minutes
-        if self._i > 3 * 30:
-            self._i = 0
-            self.scan()
-
         bt_msg = ""
         if not bluetooth_available:
             bt_msg = "BT Software not installed"

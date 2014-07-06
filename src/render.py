@@ -1,5 +1,4 @@
 import pygame
-from pygame import constants
 from pygame.locals import Color
 
 __author__ = 'Sam'
@@ -141,19 +140,3 @@ class Gradient():
     def render(self, screen, x, y):
         self._rect.topleft = (x, y)
         screen.blit(self._image, self._rect)
-
-
-class InformantContext():
-    def __init__(self):
-        self.width = 0
-        self.height = 0
-        self.config = None
-
-
-class Module():
-    def __init__(self, context):
-        pass
-
-    def render(self, screen, context):
-        pass
-

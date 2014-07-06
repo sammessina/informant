@@ -1,31 +1,27 @@
 import calendar
 import urllib2
-import json
 import httplib
 import time
-import os
 
+from module import Module
 import render
-#import render.Module as Module
-import render
-import pygame
 
 
-class NetworkModule(render.Module):
+class NetworkModule(Module):
     def __init__(self, context):
-        render.Module.__init__(self, context)
+        Module.__init__(self, context)
         self.label = render.OutlinedTextImg(color="red", outlinesize=2, size=60)
-        self._i = 0
         self._net_error = False
         self._api_error = False
         self._offset = 0
-        self.get_time()
 
-    def get_time(self):
+    def update_interval(self):
+        return 3 * 60
+
+    def update(self, context):
         try:
             self._net_error = False
             self._api_error = False
-            self._i = 0
             url = 'http://www.timeapi.org/utc/now'
             response = urllib2.urlopen(url, timeout=120).read()
             result = time.strptime(response, "%Y-%m-%dT%H:%M:%S+00:00")
@@ -39,8 +35,5 @@ class NetworkModule(render.Module):
             self._api_error = True
 
     def render(self, screen, context):
-        self._i += 1
-        if self._i > 180 * 30:
-            self.get_time()
         if abs(self._offset) > 60:
             self.label.render(screen, context.width - 450, context.height - 550, "Time Incorrect")

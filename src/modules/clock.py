@@ -2,14 +2,15 @@ import random
 import datetime
 import time
 import pygame
+from module import Module
 import render
 
 
-class ClockModule(render.Module):
+class ClockModule(Module):
     BOTTOM_PANEL_HEIGHT_PX = 300
 
     def __init__(self, context):
-        render.Module.__init__(self, context)
+        Module.__init__(self, context)
         self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(context.height * .65))
         outline = pygame.Color(0)
         self.clock = render.MultiColoredTextImg(parts=[

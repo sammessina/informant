@@ -3,22 +3,26 @@ import json
 import StringIO
 
 import pygame
+from module import Module
 import render
 
 
-class BingBGModule(render.Module):
+class BingBGModule(Module):
     GRADIENT_SIZE = 300
 
     def __init__(self, context):
-        render.Module.__init__(self, context)
-        self._i = -2
+        Module.__init__(self, context)
         self.img = None
         self.img_url = None
         self.img_rect = None
         self._gradient = render.Gradient(context.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
                                          pygame.Color(0, 0, 0, 255))
 
-    def get_bg(self, screen_info):
+    # Grab image once every 2 hours
+    def update_interval(self):
+        return 2 * 60 * 60
+
+    def update(self, context):
         resolutions = ["1920x1080", "1920x1200", "1366x768"]
         try:
             url = 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
@@ -40,7 +44,7 @@ class BingBGModule(render.Module):
             # img_y/img_x = screen_y/screen_x
             # img_y = screen_y/screen_x*img_x
             # img_x =
-            scale = (1.0 * screen_info.height / img_raw.get_rect().height)
+            scale = (1.0 * context.height / img_raw.get_rect().height)
             new_width = int(img_raw.get_rect().width * scale)
             new_height = int(img_raw.get_rect().height * scale)
             img_raw = pygame.transform.smoothscale(img_raw, (new_width, new_height))
@@ -50,12 +54,6 @@ class BingBGModule(render.Module):
             pass
 
     def render(self, screen, context):
-        self._i += 1
-        # Grab image once every 2 hours
-        if self._i == -1 or self._i > 2 * 60 * 120:
-            self._i = 0
-            self.get_bg(context)
-
         if self.img is not None:
             screen.blit(self.img,
                         (int((context.width - self.img_rect.width) / 2),
