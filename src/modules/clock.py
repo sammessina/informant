@@ -12,11 +12,12 @@ class ClockModule(Module):
     def __init__(self, context):
         Module.__init__(self, context)
         self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(context.height * .65))
-        outline = pygame.Color(0)
+        color = "black"
+        outline = "white"
         self.clock = render.MultiColoredTextImg(parts=[
-            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, outlinesize=2),
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
-            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, outlinesize=2)
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2)
         ])
         self.date_label = render.OutlinedTextImg(color="#ffffff", size=60)
         self.clock.set_text(1, ":")
@@ -46,7 +47,7 @@ class ClockModule(Module):
         # todo ugly bug: first frame will be at wrong coord
         # actually it's kind of nice when the time changes and .5 seconds later moves
         if minute != self.last_minute:
-            self.wacky_colors()  # todo: do this only if specified in config
+            #self.wacky_colors()  # todo: do this only if specified in config
             self.clock.set_text(0, str(int(time.strftime("%I", thetime))))
             self.clock.set_text(2, minute)
             self.last_minute = minute
