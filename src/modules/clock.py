@@ -16,7 +16,7 @@ class ClockModule(Module):
         outline = "white"
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),
-            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="#222222", outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2)
         ])
         self.date_label = render.OutlinedTextImg(color="#ffffff", size=60)
