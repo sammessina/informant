@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # This script configures system settings of the raspberry pi
+# To run:
+#   wget https://raw.githubusercontent.com/youresam/informant/master/config_pi.sh
+#   chmod +x config_pi.sh
+#   ./config_pi.sh
 # Settings configured:
 #   * Run initial raspi-config
 #   * Configure config.txt
@@ -48,6 +52,7 @@ mv "$3.bak" "$3"
 
 # Taken from raspi-config script
 get_config_var() {
+    if [ -f "2" ]; then
   lua - "$1" "$2" <<EOF
 local key=assert(arg[1])
 local fn=assert(arg[2])
@@ -60,6 +65,7 @@ for line in file:lines() do
   end
 end
 EOF
+fi
 }
 
 function run_raspi-config {
