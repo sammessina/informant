@@ -121,9 +121,7 @@ function config_wifi {
         # This file: /etc/network/interfaces
 
         # Check for "auto wlan0"
-        if grep -q "auto wlan0" "/etc/network/interfaces"; then
-            echo "wlan0 set to automatic"
-        else
+        if ! grep -q "auto wlan0" "/etc/network/interfaces"; then
             echo "setting wlan0 to auto"
             printf "\nauto wlan0" >> /etc/network/interfaces
             NEED_TO_REBOOT=1
@@ -136,12 +134,15 @@ function config_wifi {
             NEED_TO_REBOOT=1
         fi
 
-        if grep -q "iface wlan0 inet manual" "/etc/network/interfaces"; then
+        if ! grep -q "iface wlan0 inet dhcp" "/etc/network/interfaces"; then
             echo "Setting wlan0 to DHCP"
-            sed -i -e "s/^iface wlan0 inet manual/iface wlan0 inet dhcp/" /etc/network/interfaces
+            # Need to make sure this is after the auto setting
+            sed -i '/^iface wlan0 inet manual/d' /etc/network/interfaces
+            printf "\niface wlan0 inet dhcp" >> /etc/network/interfaces
             NEED_TO_REBOOT=1
         fi
 
+        #todo JUST CLOBBER THE FILE
 
         # Needs to contain lines:
         #   wpa-ssid "ssid"

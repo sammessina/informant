@@ -20,9 +20,12 @@ changed=0
 # Set as startup program on raspberry pi
 function install {
     #add line (if not exists) to /etc/xdg/lxsession/LXDE/autostart
-    #todo: if not exists
-    echo "Installing to /etc/xdg/lxsession/LXDE/autostart"
-    printf "\nlxterminal -e \"${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
+    if grep -q "run_ci" "/etc/xdg/lxsession/LXDE/autostart"; then
+        echo "Already installed"
+    else
+        echo "Installing to /etc/xdg/lxsession/LXDE/autostart"
+        printf "\nlxterminal -e \"${localdir}/run_ci.sh\"" >> /etc/xdg/lxsession/LXDE/autostart
+    fi
     exit 0
 }
 
@@ -63,7 +66,7 @@ function query_git {
 function update {
     echo "updating informant"
     cd ${localdir}
-    git fetch --all && git reset --hard origin/master && chmod +x run_ci.sh
+    git fetch --all && git reset --hard origin/master && chmod u+x *.sh
     start_informant
 }
 
