@@ -96,7 +96,7 @@ function run_raspi-config {
 function check_config {
     v=$(get_config_var framebuffer_depth /boot/config.txt)
     if [ -z "${v}" ] || [ "${v}" != "32" ]; then
-        echo "setting framebuffer_depth=32"
+        echo "setting framebuffer_depth=32 (was ${v})"
         set_config_var framebuffer_depth 32 /boot/config.txt
     fi
 
