@@ -57,7 +57,7 @@ mv "$3.bak" "$3"
 
 # Taken from raspi-config script
 get_config_var() {
-    if [ -f "2" ]; then
+    if [ -f "$2" ]; then
   lua - "$1" "$2" <<EOF
 local key=assert(arg[1])
 local fn=assert(arg[2])
