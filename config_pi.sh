@@ -77,7 +77,7 @@ function run_raspi-config {
     # Set timezone
     currzone=$(echo /etc/timezone)
     v=$(get_config_var timezone /boot/informant.ini)
-    if [ -n "${v}" ] && [ "${v}" -ne "${currzone}" ]; then
+    if [ -n "${v}" ] && [ "${v}" != "${currzone}" ]; then
         echo "setting timezone to ${v}"
         echo "${v}" > /etc/timezone
         dpkg-reconfigure -f noninteractive tzdata
@@ -95,19 +95,19 @@ function run_raspi-config {
 
 function check_config {
     v=$(get_config_var framebuffer_depth /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" -ne "32" ]; then
+    if [ -z "${v}" ] || [ "${v}" != "32" ]; then
         echo "setting framebuffer_depth=32"
         set_config_var framebuffer_depth 32 /boot/config.txt
     fi
 
     v=$(get_config_var framebuffer_ignore_alpha /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" -ne "1" ]; then
+    if [ -z "${v}" ] || [ "${v}" != "1" ]; then
         echo "setting framebuffer_ignore_alpha=1"
         set_config_var framebuffer_ignore_alpha 1 /boot/config.txt
     fi
 
     v=$(get_config_var disable_overscan /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" -ne "1" ]; then
+    if [ -z "${v}" ] || [ "${v}" != "1" ]; then
         echo "setting disable_overscan=1"
         set_config_var disable_overscan 1 /boot/config.txt
     fi
@@ -117,7 +117,7 @@ function config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
-    if [ "${config_wifi}" -eq "Yes" ]; then
+    if [ "${config_wifi}" == "Yes" ]; then
         # This file: /etc/network/interfaces
 
         # Check for "auto wlan0"
