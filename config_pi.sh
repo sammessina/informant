@@ -117,7 +117,7 @@ function config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
-    if [ "${config_wifi}" == "Yes" ]; then
+    if [ "${config_wifi}" == "Yes" ] && [ -n "${wifi_ssid}" ] && [ -n "${wifi_password}" ]; then
         # This file: /etc/network/interfaces
 
         # Check for "auto wlan0"
