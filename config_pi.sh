@@ -1,4 +1,15 @@
-#!/bin/bash
+#! /bin/sh
+# /etc/init.d/config_pi
+
+### BEGIN INIT INFO
+# Provides:          config_pi
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Configures system settings of the raspberry pi
+# Description:       Configures system settings of the raspberry pi
+### END INIT INFO
 
 # This script configures system settings of the raspberry pi
 # To run:
@@ -149,6 +160,11 @@ fi
 
 if [ "$1" == "uninstall" ]; then
     uninstall
+    exit 0
+fi
+
+if [ "$1" == "stop" ]; then
+    # Not a real service, so ignore this
     exit 0
 fi
 
