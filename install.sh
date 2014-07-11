@@ -3,7 +3,7 @@
 # This script is run independently from the rest. It is the bootstrap for configuring the system and installing
 # informant.
 # To run (first time setup):
-#   > wget -O - https://raw.githubusercontent.com/youresam/informant/master/install.sh | bash
+#   > wget -O - https://raw.githubusercontent.com/youresam/informant/master/install.sh | sudo bash
 # The following steps are run:
 #   * Install needed packages
 #   * Download repo from github
