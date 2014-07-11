@@ -95,7 +95,7 @@ function run_raspi-config {
     currzone=$(echo /etc/timezone)
     v=$(get_config_var timezone /boot/informant.ini)
     if [ -n "${v}" ] && [ "${v}" != "${currzone}" ]; then
-        echo "setting timezone to ${v}"
+        echo "setting timezone to ${v} (was ${currzone})"
         echo "${v}" > /etc/timezone
         dpkg-reconfigure -f noninteractive tzdata
     fi
@@ -134,9 +134,9 @@ function try_config_wifi {
         # Needs to contain lines:
         #   wpa-ssid "ssid"
         #   wpa-psk "password"
-        ssid_ok=$(grep -q "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces")
-        password_ok=$(grep -q "wpa-psk \"${wifi_password}\"" "/etc/network/interfaces")
-        if [ ${ssid_ok} ] && [ ${password_ok} ]; then
+        ssid_ok=$(grep "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces")
+        password_ok=$(grep "wpa-psk \"${wifi_password}\"" "/etc/network/interfaces")
+        if [[ -n ${ssid_ok} ]] && [[ -n ${password_ok} ]]; then
             echo "Wifi config ok"
         else
             echo "Configuring wifi"
