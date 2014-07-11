@@ -122,6 +122,10 @@ function check_config {
     enforce_setting framebuffer_depth 32
     enforce_setting framebuffer_ignore_alpha 1
     enforce_setting disable_overscan 1
+    v=$(get_config_var resolution /boot/config.txt)
+    if [ -n ${v} ]; then
+        enforce_setting hdmi_cvt "${v} 60"
+    fi
 }
 
 function try_config_wifi {
