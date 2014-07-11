@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # /etc/init.d/config_pi
 
 ### BEGIN INIT INFO
