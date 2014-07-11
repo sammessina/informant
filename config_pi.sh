@@ -118,17 +118,12 @@ function check_config {
     enforce_setting disable_overscan 1
 }
 
-function overwrite_wifi_file {
-    echo "Configuring wifi"
-    printf "auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"$1\"\nwpa-psk \"$2\"" >  /etc/network/interfaces
-    NEED_TO_REBOOT=1
-}
-
 function config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
-    if [ "${config_wifi}" == "Yes" ] && [ -n "${wifi_ssid}" ]; then
+    echo "config_wifi=${config_wifi}, wifi_ssid=${wifi_ssid}"
+    if [ "${config_wifi}" == "Yes" ] && [ "${wifi_ssid}" ]; then
         # This file: /etc/network/interfaces
         # Needs to contain lines:
         #   wpa-ssid "ssid"
@@ -138,7 +133,9 @@ function config_wifi {
         if [ ${ssid_ok} ] && [ ${password_ok} ]; then
             echo "Wifi config ok"
         else
-            overwrite_wifi_file ${wifi_ssid} ${wifi_password}
+            echo "Configuring wifi"
+            printf "auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"${wifi_ssid}\"\nwpa-psk \"${wifi_password}\"" >  /etc/network/interfaces
+            NEED_TO_REBOOT=1
         fi
     else
         echo "Skipping wifi config"
