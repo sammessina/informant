@@ -118,7 +118,7 @@ function check_config {
     enforce_setting disable_overscan 1
 }
 
-function config_wifi {
+function try_config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
@@ -149,7 +149,7 @@ function main {
         run_raspi-config
         check_config
     fi
-    config_wifi
+    try_config_wifi
     #if [ ${NEED_TO_REBOOT} == 1 ]; then
     #    reboot
     #fi
