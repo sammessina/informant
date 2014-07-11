@@ -8,7 +8,7 @@ import pygame
 from pygame.locals import *
 
 import render
-from modules import weather, bingbg, clock, btscan
+from modules import weather, bingbg, clock, btscan, network
 
 
 class Informant():
@@ -57,7 +57,7 @@ class Informant():
             bingbg.BingBGModule(self.context),
             weather.WeatherModule(self.context),
             btscan.BluetoothModule(self.context),
-            # network.NetworkModule(self.context),
+            network.NetworkModule(self.context),
             clock.ClockModule(self.context)
         ]
 
