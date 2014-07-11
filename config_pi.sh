@@ -92,7 +92,7 @@ get_config_var() {
 
 function run_raspi-config {
     # Set timezone
-    currzone=$(echo /etc/timezone)
+    currzone=$(cat /etc/timezone)
     v=$(get_config_var timezone /boot/informant.ini)
     if [ -n "${v}" ] && [ "${v}" != "${currzone}" ]; then
         echo "setting timezone to ${v} (was ${currzone})"
