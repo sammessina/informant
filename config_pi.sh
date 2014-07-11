@@ -114,7 +114,7 @@ function enforce_setting {
     v=$(get_config_var $1 /boot/config.txt)
     if [ -z "${v}" ] || [ "${v}" != "$2" ]; then
         echo "setting $1=$2 (was ${v})"
-        set_config_var $1 $2 /boot/config.txt
+        set_config_var "$1" "$2" /boot/config.txt
     fi
 }
 
