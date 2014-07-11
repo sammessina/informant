@@ -123,19 +123,21 @@ function overwrite_wifi_file {
     printf "auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"$1\"\nwpa-psk \"$2\"" >  /etc/network/interfaces
     NEED_TO_REBOOT=1
 }
+
 function config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
-    if [ "${config_wifi}" == "Yes" ] && [ -n "${wifi_ssid}" ] && [ -n "${wifi_password}" ]; then
+    if [ "${config_wifi}" == "Yes" ] && [ -n "${wifi_ssid}" ]; then
         # This file: /etc/network/interfaces
         # Needs to contain lines:
         #   wpa-ssid "ssid"
         #   wpa-psk "password"
-        # I don't understand bash if statements well enough to OR these
-        if ! grep -q "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces"; then
-            overwrite_wifi_file ${wifi_ssid} ${wifi_password}
-        elif ! grep -q "wpa-psk \"${wifi_password}\"" "/etc/network/interfaces"; then
+        ssid_ok=$(grep -q "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces")
+        password_ok=$(grep -q "wpa-psk \"${wifi_password}\"" "/etc/network/interfaces")
+        if [ ${ssid_ok} ] && [ ${password_ok} ]; then
+            echo "Wifi config ok"
+        else
             overwrite_wifi_file ${wifi_ssid} ${wifi_password}
         fi
     fi
