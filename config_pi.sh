@@ -109,8 +109,7 @@ function check_config {
 
 function overwrite_wifi_file {
     echo "Configuring wifi"
-    str="auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"$1\"\nwpa-psk \"$2\""
-    echo ${str} >  /etc/network/interfaces
+    printf "auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"$1\"\nwpa-psk \"$2\"" >  /etc/network/interfaces
     NEED_TO_REBOOT=1
 }
 function config_wifi {
