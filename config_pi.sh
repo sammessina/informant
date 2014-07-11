@@ -140,10 +140,13 @@ function config_wifi {
         else
             overwrite_wifi_file ${wifi_ssid} ${wifi_password}
         fi
+    else
+        echo "Skipping wifi config"
     fi
 }
 
 function main {
+    echo "config_pi running"
     config_settings=$(get_config_var config_wifi /boot/informant.ini)
     if [ "${config_settings}" == "Yes" ]; then
         run_raspi-config
@@ -167,6 +170,7 @@ fi
 
 if [ "$1" == "stop" ]; then
     # Not a real service, so ignore this
+    echo "Ignoring command"
     exit 0
 fi
 
