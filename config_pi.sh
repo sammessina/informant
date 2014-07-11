@@ -67,7 +67,7 @@ mv "$3.bak" "$3"
 }
 
 # Taken from raspi-config script
-get_config_var() {
+get_config_var_dirty() {
     if [ -f "$2" ]; then
   lua - "$1" "$2" <<EOF
 local key=assert(arg[1])
@@ -82,6 +82,12 @@ for line in file:lines() do
 end
 EOF
 fi
+}
+
+get_config_var() {
+    v=$(get_config_var_dirty $1 $2)
+    v=$(echo ${v} | tr -d '\r\n')
+    echo ${v}
 }
 
 function run_raspi-config {
