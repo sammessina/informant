@@ -93,92 +93,54 @@ function run_raspi-config {
 
 }
 
-function check_config {
-    v=$(get_config_var framebuffer_depth /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" != "32" ]; then
-        echo "setting framebuffer_depth=32 (was ${v})"
-        set_config_var framebuffer_depth 32 /boot/config.txt
-    fi
-
-    v=$(get_config_var framebuffer_ignore_alpha /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" != "1" ]; then
-        echo "setting framebuffer_ignore_alpha=1"
-        set_config_var framebuffer_ignore_alpha 1 /boot/config.txt
-    fi
-
-    v=$(get_config_var disable_overscan /boot/config.txt)
-    if [ -z "${v}" ] || [ "${v}" != "1" ]; then
-        echo "setting disable_overscan=1"
-        set_config_var disable_overscan 1 /boot/config.txt
+function enforce_setting {
+    v=$(get_config_var $1 /boot/config.txt)
+    if [ -z "${v}" ] || [ "${v}" != "$2" ]; then
+        echo "setting $1=$2 (was ${v})"
+        set_config_var $1 $2 /boot/config.txt
     fi
 }
 
+function check_config {
+    enforce_setting framebuffer_depth 32
+    enforce_setting framebuffer_ignore_alpha 1
+    enforce_setting disable_overscan 1
+}
+
+function overwrite_wifi_file {
+    echo "Configuring wifi"
+    str="auto lo\niface lo inet loopback\niface eth0 inet dhcp\nallow-hotplug wlan0\nauto wlan0\niface wlan0 inet dhcp\nwpa-ssid \"$1\"\nwpa-psk \"$2\""
+    echo ${str} >  /etc/network/interfaces
+    NEED_TO_REBOOT=1
+}
 function config_wifi {
     config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
     if [ "${config_wifi}" == "Yes" ] && [ -n "${wifi_ssid}" ] && [ -n "${wifi_password}" ]; then
         # This file: /etc/network/interfaces
-
-        # Check for "auto wlan0"
-        if ! grep -q "auto wlan0" "/etc/network/interfaces"; then
-            echo "setting wlan0 to auto"
-            printf "\nauto wlan0" >> /etc/network/interfaces
-            NEED_TO_REBOOT=1
-        fi
-
-        # Disable auto config file
-        if grep -q "^wpa-roam" "/etc/network/interfaces"; then
-            echo "Deleting wpa-roam setting"
-            sed -i '/^wpa-roam /d' /etc/network/interfaces
-            NEED_TO_REBOOT=1
-        fi
-
-        if ! grep -q "iface wlan0 inet dhcp" "/etc/network/interfaces"; then
-            echo "Setting wlan0 to DHCP"
-            # Need to make sure this is after the auto setting
-            sed -i '/^iface wlan0 inet manual/d' /etc/network/interfaces
-            printf "\niface wlan0 inet dhcp" >> /etc/network/interfaces
-            NEED_TO_REBOOT=1
-        fi
-
-        #todo JUST CLOBBER THE FILE
-
         # Needs to contain lines:
         #   wpa-ssid "ssid"
         #   wpa-psk "password"
-
-        if grep -q "wpa-ssid" "/etc/network/interfaces"; then
-            # File has an entry already
-            # Is it the correct one?
-            if grep -q "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces"; then
-                # Yes it is
-                echo "Wifi already set up correctly"
-            else
-                # Nope, fix it
-                echo "Configuring wifi"
-                sed -i '/wpa-ssid /d' /etc/network/interfaces
-                sed -i '/wpa-psk /d' /etc/network/interfaces
-                printf "\nwpa-ssid \"${wifi_ssid}\"\nwpa-psk \"${wifi_password}\"" >> /etc/network/interfaces
-                NEED_TO_REBOOT=1
-            fi
-        else
-            # file doesnt contain any ssid entry
-            # Add entry
-            echo "Adding wifi config"
-            printf "\nwpa-ssid \"${wifi_ssid}\"\nwpa-psk \"${wifi_password}\"" >> /etc/network/interfaces
-            NEED_TO_REBOOT=1
+        # I don't understand bash if statements well enough to OR these
+        if ! grep -q "wpa-ssid \"${wifi_ssid}\"" "/etc/network/interfaces"; then
+            overwrite_wifi_file ${wifi_ssid} ${wifi_password}
+        elif ! grep -q "wpa-psk \"${wifi_password}\"" "/etc/network/interfaces"; then
+            overwrite_wifi_file ${wifi_ssid} ${wifi_password}
         fi
     fi
 }
 
 function main {
-    run_raspi-config
-    check_config
-    config_wifi
-    if [ ${NEED_TO_REBOOT} == 1 ]; then
-        reboot
+    config_settings=$(get_config_var config_wifi /boot/informant.ini)
+    if [ "${config_settings}" == "Yes" ]; then
+        run_raspi-config
+        check_config
     fi
+    config_wifi
+    #if [ ${NEED_TO_REBOOT} == 1 ]; then
+    #    reboot
+    #fi
 }
 
 if [ "$1" == "install" ]; then
