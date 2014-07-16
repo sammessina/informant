@@ -8,6 +8,14 @@ An information board designed to be easy to set up and use.
 * Easy to set up
 * Feature-rich
 
+### New Raspberry Pi Setup
+1. Install [Raspbian](http://www.raspberrypi.org/downloads)
+2. Edit informant.ini and copy it to the SD card root (in Windows)
+2. Log in
+3. Run: wget -O - https://raw.githubusercontent.com/youresam/informant/master/install.sh | sudo bash
+4. Run: sudo reboot
+
+
 ### Raspberry Pi Setup
 1. Install [Raspbian](http://www.raspberrypi.org/downloads)
   * [2012-09-18-wheezy-raspbian](http://ftp.gnome.org/mirror/raspberrypi/images/raspbian/2012-09-18-wheezy-raspbian/2012-09-18-wheezy-raspbian.zip) seems to be more stable (2013+ drops network connection)

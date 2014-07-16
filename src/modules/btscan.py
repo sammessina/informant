@@ -17,11 +17,8 @@ class BluetoothModule(Module):
         Module.__init__(self, context)
         self.monitor_is_on = True
         self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
-        try:
-            self.bluetooth_address = context.config.get("Informant", "bluetooth")
-            if len(self.bluetooth_address) == 0:
-                self.bluetooth_address = None
-        except:
+        self.bluetooth_address = context.config.get("Informant", "bluetooth")
+        if len(self.bluetooth_address) == 0:
             self.bluetooth_address = None
         # -1=scan failed, 0=not scanned, 1=not found, 2=found
         self.bluetooth_status = 0
@@ -49,6 +46,9 @@ class BluetoothModule(Module):
             self.bluetooth_status = -1
 
     def render(self, screen, context):
+        if self.bluetooth_address is None:
+            return
+
         bt_msg = ""
         if not bluetooth_available:
             bt_msg = "BT Software not installed"
@@ -61,4 +61,4 @@ class BluetoothModule(Module):
         elif self.bluetooth_status == 2:
             bt_msg = "BT Device found"
 
-        self.status_label.render(screen, 300, context.height - 50, bt_msg)
+        self.status_label.render(screen, 700, context.height - 50, bt_msg)

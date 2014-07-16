@@ -29,7 +29,7 @@ class Informant():
 
     def read_config(self):
         config = ConfigParser.ConfigParser()
-        config_paths = ["/boot/informant.ini", "informant.ini", "../informant.ini"]
+        config_paths = ["informant.override.ini", "/boot/informant.ini", "informant.ini", "../informant.ini"]
         for path in config_paths:
             if os.path.isfile(path):
                 config.read(path)
@@ -40,8 +40,10 @@ class Informant():
         self.read_config()
         pygame.init()
         fps_clock = pygame.time.Clock()
-        pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
-        # pygame.display.set_mode((1024, 600), pygame.RESIZABLE)
+        if self.context.config.get("Informant", "fullscreen") == "No":
+            pygame.display.set_mode((1024, 600), pygame.RESIZABLE)
+        else:
+            pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption('informant')
 

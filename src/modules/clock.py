@@ -12,11 +12,11 @@ class ClockModule(Module):
     def __init__(self, context):
         Module.__init__(self, context)
         self.clockfont = pygame.font.Font("NixieOne-Regular.otf", int(context.height * .65))
-        color = "black"
-        outline = "white"
+        color = "white"
+        outline = "black"
         self.clock = render.MultiColoredTextImg(parts=[
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2),
-            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="#222222", outlinesize=2),
+            render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color="gray", outlinesize=2),
             render.OutlinedTextImg(font=self.clockfont, outercolor=outline, color=color, outlinesize=2)
         ])
         self.date_label = render.OutlinedTextImg(color="#ffffff", size=60)

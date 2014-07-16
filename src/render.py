@@ -3,7 +3,8 @@ from pygame.locals import Color
 
 __author__ = 'Sam'
 
-#todo: port to https://github.com/tipam/pi3d
+# todo: port to https://github.com/tipam/pi3d
+# todo: make this file thread-safe (VERY IMPORTANT!!! Board crashes otherwise!)
 
 class TextRendererBase():
     def __init__(self):
@@ -43,7 +44,7 @@ class TextImg(TextRendererBase):
 
     def set_text(self, text):
         if text != self._text:
-            self._text = str(text)
+            self._text = unicode(text)
             self._image = None
 
     def get_text(self):
