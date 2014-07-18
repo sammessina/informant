@@ -17,7 +17,7 @@ class BluetoothModule(Module):
         Module.__init__(self, context)
         self.monitor_is_on = True
         self.status_label = render.OutlinedTextImg(color="#8888ff", outlinesize=2, size=20)
-        self.bluetooth_address = context.config.get("Informant", "bluetooth")
+        self.bluetooth_address = context.get_config("bluetooth")
         if len(self.bluetooth_address) == 0:
             self.bluetooth_address = None
         # -1=scan failed, 0=not scanned, 1=not found, 2=found

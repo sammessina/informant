@@ -11,10 +11,10 @@ import render
 class WeatherModule(Module):
     def __init__(self, context):
         Module.__init__(self, context)
-        self.zip_code = context.config.get("Informant", "zip_code")
+        self.zip_code = context.get_config("zip_code")
         if len(self.zip_code) == 0:
             self.zip_code = self._get_geoip()
-        self.api_key = context.config.get("Informant", "api_key")
+        self.api_key = context.get_config("api_key")
         self.temp_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.updated_label = render.TextImg(color="#ffffff", size=20)

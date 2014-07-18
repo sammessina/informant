@@ -34,13 +34,17 @@ class Informant():
             if os.path.isfile(path):
                 config.read(path)
                 break
-        self.context.config = config
+        self.context._config = config
+
+    def update_screen_size(self, w, h):
+        self.context.width = w
+        self.context.height = h
 
     def main(self):
         self.read_config()
         pygame.init()
         fps_clock = pygame.time.Clock()
-        if self.context.config.get("Informant", "fullscreen") == "No":
+        if self.context.get_config("fullscreen") == "No":
             pygame.display.set_mode((1024, 600), pygame.RESIZABLE)
         else:
             pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
@@ -48,8 +52,7 @@ class Informant():
         pygame.display.set_caption('informant')
 
         self.screen = pygame.display.get_surface()
-        self.context.width = pygame.display.Info().current_w
-        self.context.height = pygame.display.Info().current_h
+        self.update_screen_size(pygame.display.Info().current_w, pygame.display.Info().current_h)
 
         fps_label = render.TextImg(color="red")
 
@@ -81,6 +84,8 @@ class Informant():
                     if event.key == K_ESCAPE:
                         pygame.quit()
                         sys.exit()
+                elif event.type == pygame.VIDEORESIZE:
+                    self.update_screen_size(event.w, event.h)
 
             self.screen.fill(Color("black"))
 
@@ -103,7 +108,13 @@ class InformantContext():
     def __init__(self):
         self.width = 0
         self.height = 0
-        self.config = None
+        self._config = None
+
+    def get_config(self, option):
+        try:
+            return self._config.get("Informant", option)
+        except:
+            return ""
 
 
 class _ModuleRef():
