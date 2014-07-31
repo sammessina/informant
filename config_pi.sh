@@ -122,18 +122,28 @@ function check_config {
     enforce_setting framebuffer_depth 32
     enforce_setting framebuffer_ignore_alpha 1
     enforce_setting disable_overscan 1
-    v=$(get_config_var resolution /boot/informant.ini)
+
+    is_vga=$(get_config_var is_vga /boot/informant.ini)
+    if [ "${is_vga}" == "Yes" ]; then
+        enforce_setting hdmi_force_hotplug 1
+        enforce_setting config_hdmi_boost 4
+    fi
+
+    v=$(get_config_var screen_w /boot/informant.ini)
     if [[ -n ${v} ]]; then
-        enforce_setting hdmi_cvt "${v} 60"
+        enforce_setting framebuffer_width ${v}
+    fi
+
+    v=$(get_config_var screen_h /boot/informant.ini)
+    if [[ -n ${v} ]]; then
+        enforce_setting framebuffer_height ${v}
     fi
 }
 
 function try_config_wifi {
-    config_wifi=$(get_config_var config_wifi /boot/informant.ini)
     wifi_ssid=$(get_config_var wifi_ssid /boot/informant.ini)
     wifi_password=$(get_config_var wifi_password /boot/informant.ini)
-    echo "config_wifi=${config_wifi}, wifi_ssid=${wifi_ssid}"
-    if [ "${config_wifi}" == "Yes" ] && [ "${wifi_ssid}" ]; then
+    if [ "${wifi_ssid}" ]; then
         # This file: /etc/network/interfaces
         # Needs to contain lines:
         #   wpa-ssid "ssid"
@@ -154,15 +164,12 @@ function try_config_wifi {
 
 function main {
     echo "config_pi running"
-    config_settings=$(get_config_var config_wifi /boot/informant.ini)
+    config_settings=$(get_config_var config_settings /boot/informant.ini)
     if [ "${config_settings}" == "Yes" ]; then
         run_raspi-config
         check_config
     fi
     try_config_wifi
-    #if [ ${NEED_TO_REBOOT} == 1 ]; then
-    #    reboot
-    #fi
 }
 
 if [ "$1" == "install" ]; then
