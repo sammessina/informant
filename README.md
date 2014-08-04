@@ -2,13 +2,7 @@ Informant
 =========
 An information board designed to be easy to set up and use.
 
-## Design
-
-### Goals:
-* Easy to set up
-* Feature-rich
-
-### New Raspberry Pi Setup
+### Automatic Raspberry Pi Setup
 1. Install [Raspbian](http://www.raspberrypi.org/downloads)
 2. Edit informant.ini and copy it to the SD card root (in Windows)
 2. Log in
@@ -42,19 +36,6 @@ An information board designed to be easy to set up and use.
 5. git clone https://github.com/youresam/informant.git
 6. cd informant && chmod +x run_ci.sh && sudo ./run_ci.sh install
 
-### Panes:
-* Assignments
-* Todo
-* Clock
-* Classes
-* Time until wake
-* Weather?
-* Unread Email?
-
-### Management:
+### (todo) Management:
 * Data synced from server on internet - accessable anywhere
 * Events can be sent from email?
-
-### Hardware requirements:
-* A large screen
-* Hardware capable of running an operating system
