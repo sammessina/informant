@@ -57,8 +57,8 @@ class WeatherModule(Module):
             sunset = self._format_time(time.localtime(int(result['sys']['sunset'])))
             self.sun_label.set_text("Sun: %s - %s" % (sunrise, sunset))
             self._updated_time = time.time()
-        except Exception as e:
-            self.temp_f = "Error: %s" % e
+        except Exception:
+            pass
 
     def render(self, screen, context):
         # temperature
