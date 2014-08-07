@@ -23,6 +23,7 @@ class WeatherModule(Module):
         self.temp_f = ""
         self._i = 0
         self._updated_time = None
+        self._had_error = False
 
     @staticmethod
     def _get_geoip():
@@ -44,6 +45,8 @@ class WeatherModule(Module):
         return hour + rest
 
     def update_interval(self):
+        if self._had_error:
+            return 5 * 60
         return 30 * 60
 
     def update(self, context):
@@ -55,10 +58,11 @@ class WeatherModule(Module):
             self.weather_label.set_text(result['weather'][0]['main'])
             sunrise = self._format_time(time.localtime(int(result['sys']['sunrise'])))
             sunset = self._format_time(time.localtime(int(result['sys']['sunset'])))
-            self.sun_label.set_text("Sun: %s - %s" % (sunrise, sunset))
+            self.sun_label.set_text("Sunlight: %s - %s" % (sunrise, sunset))
             self._updated_time = time.time()
+            self._had_error = False
         except Exception:
-            pass
+            self._had_error = True
 
     def render(self, screen, context):
         # temperature
