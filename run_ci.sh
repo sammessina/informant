@@ -9,7 +9,7 @@
 # Spec: Running this file normally copies its directory to tmp and runs from there by
 #       using the args: run <origindir>
 
-#fixme: this file keeps getting erased on shutdown and I don't know why. workaround is to run the following cmd on boot
+#fixme: this file keeps getting erased on shutdown and I don't know why. workaround is to run within cmd window
 # A workaround: launch the file from the terminal instead of directly
 # To reset during testing: git fetch --all && git reset --hard origin/master && chmod u+x *.sh
 
@@ -48,18 +48,21 @@ function stop_informant {
 }
 
 function query_git {
-    echo "querying remote repo"
+    # echo "querying remote repo"
     cd ${localdir}
     changed=0
     log="`git ls-remote origin -h refs/heads/master | cut -f1`"
     if [ ${#log} -eq 40 ]; then
         [ "$log" = "`git log --pretty=%H ...refs/heads/master^ | head -n 1`" ] && changed=0 || changed=1 #http://stackoverflow.com/a/16920556
-        echo "git changed=${changed}"
+        # echo "git changed=${changed}"
     fi
     if [ ${changed} -eq 1 ]; then
         update
         #run_ci.sh
         #exit 0
+    else
+        # check if it's crashed
+        ps aux | grep -v grep | grep "python main.py" > /dev/null || start_informant
     fi
 }
 

@@ -55,6 +55,8 @@ class ClockModule(Module):
             self.time_y = random.randrange(max(1, context.height - self.clock.height - self.BOTTOM_PANEL_HEIGHT_PX))
 
         self.clock.render(screen, self.time_x, self.time_y)
-        date_str = datetime.datetime.now().strftime("%A, %B %d")
+        now = datetime.datetime.now()
+        day = str(int(now.strftime("%d")))
+        date_str = now.strftime("%A, %B ") + day
         self.date_label.set_text(date_str)
         self.date_label.render(screen, context.width - self.date_label.render_width() - 100, context.height - 150)
