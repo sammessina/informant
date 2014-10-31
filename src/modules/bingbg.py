@@ -8,15 +8,11 @@ import render
 
 
 class BingBGModule(Module):
-    GRADIENT_SIZE = 300
-
     def __init__(self, context):
         Module.__init__(self, context)
         self.img = None
         self.img_url = None
         self.img_rect = None
-        self._gradient = render.Gradient(context.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
-                                         pygame.Color(0, 0, 0, 255))
 
     # Grab image once every 2 hours
     def update_interval(self):
@@ -58,4 +54,3 @@ class BingBGModule(Module):
             screen.blit(self.img,
                         (int((context.width - self.img_rect.width) / 2),
                          int((context.height - self.img_rect.height) / 2)))
-            self._gradient.render(screen, 0, context.height - self.GRADIENT_SIZE)

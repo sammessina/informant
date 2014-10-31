@@ -3,14 +3,19 @@ import urllib2
 import json
 import re
 import time
+import pygame
 
 from module import Module
 import render
 
 
 class WeatherModule(Module):
+    GRADIENT_SIZE = 300
+
     def __init__(self, context):
         Module.__init__(self, context)
+        self._gradient = render.Gradient(context.width, self.GRADIENT_SIZE, pygame.Color(0, 0, 0, 0),
+                                         pygame.Color(0, 0, 0, 255))
         self.zip_code = context.get_config("zip_code")
         if len(self.zip_code) == 0:
             self.zip_code = self._get_geoip()
@@ -19,7 +24,6 @@ class WeatherModule(Module):
         self.weather_label = render.OutlinedTextImg(color="#ffffff", outlinesize=2, size=60)
         self.updated_label = render.TextImg(color="#ffffff", size=20)
         self.sun_label = render.TextImg(color="#ffffff", size=20)
-        self.img = None
         self.temp_f = ""
         self._i = 0
         self._updated_time = None
@@ -32,7 +36,7 @@ class WeatherModule(Module):
             matchs = re.search(r"class=\"arial_bold\">(\d{5})</td>", response)
             return matchs.group(1)
         except:
-            return "98052"
+            return ""
 
     @staticmethod
     def _kelvin_to_fahrenheit(degees_kelvin):
@@ -61,10 +65,11 @@ class WeatherModule(Module):
             self.sun_label.set_text("Sunlight: %s - %s" % (sunrise, sunset))
             self._updated_time = time.time()
             self._had_error = False
-        except Exception:
+        except:
             self._had_error = True
 
     def render(self, screen, context):
+        self._gradient.render(screen, 0, context.height - self.GRADIENT_SIZE)
         # temperature
         self.temp_label.render(screen, 50, context.height - 150, self.temp_f)
         # temperature string

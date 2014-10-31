@@ -8,7 +8,7 @@ import pygame
 from pygame.locals import *
 
 import render
-from modules import weather, bingbg, clock, btscan, network
+from modules import weather, bingbg, clock, btscan, network, slideshow
 
 
 class Informant():
@@ -59,12 +59,17 @@ class Informant():
         self.display_loading_screen()
 
         loaded_modules = [
-            bingbg.BingBGModule(self.context),
+            #bingbg.BingBGModule(self.context),
             weather.WeatherModule(self.context),
             btscan.BluetoothModule(self.context),
             network.NetworkModule(self.context),
             clock.ClockModule(self.context)
         ]
+
+        if self.context.get_config("slideshow_dir"):
+            loaded_modules.insert(0, slideshow.SlideshowModule(self.context))
+        else:
+            loaded_modules.insert(0, bingbg.BingBGModule(self.context))
 
         for module in loaded_modules:
             mod = _ModuleRef()
@@ -130,7 +135,7 @@ class _ModuleRef():
             update_start = time.time()
             self.module.update(context)
             self._last_response = time.time() - update_start
-            time.sleep(self.module.update_interval())
+            time.sleep(self.module.update_interval())  # re-evaluated after the last update, so this can be dynamic
 
     # a module is marked as 'not responding' when it takes more than 5 minutes to update
     def is_responding(self):
