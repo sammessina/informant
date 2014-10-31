@@ -1,6 +1,7 @@
 import StringIO
 import os
 import pygame
+import random
 from module import Module
 
 
@@ -16,6 +17,7 @@ class SlideshowModule(Module):
             full_path = os.path.join(slideshow_dir, filename)
             if os.path.isfile(full_path):
                 self._files.append(full_path)
+        random.shuffle(self._files)
 
 
     def _fetch_new_image(self, context):
