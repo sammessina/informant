@@ -25,17 +25,11 @@ class WeatherModule(Module):
         self.updated_label = render.TextImg(color="#ffffff", size=20)
         self.sun_label = render.TextImg(color="#ffffff", size=20)
         self.temp_f = ""
-        self._i = 0
         self._updated_time = None
         self._had_error = False
 
     @staticmethod
     def _get_geoip():
-        try:
-            response = urllib2.urlopen('http://www.geoiptool.com/en/').read()
-            matchs = re.search(r"class=\"arial_bold\">(\d{5})</td>", response)
-            return matchs.group(1)
-        except:
             return ""
 
     @staticmethod
@@ -55,7 +49,6 @@ class WeatherModule(Module):
 
     def update(self, context):
         try:
-            self._i = 0
             url = "http://api.openweathermap.org/data/2.5/weather?q=%s" % self.zip_code
             result = json.load(urllib2.urlopen(url, timeout=120))
             self.temp_f = "%d %sF" % (self._kelvin_to_fahrenheit(result['main']['temp']), u'\N{DEGREE SIGN}')

@@ -8,12 +8,10 @@ import pygame
 from pygame.locals import *
 
 import render
-from modules import weather, bingbg, clock, btscan, network, slideshow
+from modules import weather, bingbg, clock, btscan, network, slideshow, plant
 
 
 class Informant():
-    FPS_TARGET = 2
-
     def __init__(self):
         self.screen = None
         self.context = InformantContext()
@@ -55,12 +53,17 @@ class Informant():
         self.update_screen_size(pygame.display.Info().current_w, pygame.display.Info().current_h)
 
         fps_label = render.TextImg(color="red")
+        fps_target = self.context.get_config("fps_target")
+        if fps_target == "":
+            fps_target = 2
+        fps_target = int(fps_target)
 
         self.display_loading_screen()
 
         loaded_modules = [
             #bingbg.BingBGModule(self.context),
             weather.WeatherModule(self.context),
+            plant.PlantModule(self.context),
             btscan.BluetoothModule(self.context),
             network.NetworkModule(self.context),
             clock.ClockModule(self.context)
@@ -103,10 +106,10 @@ class Informant():
                     module.render_error(i, self.screen, self.context)
 
             fps = float(fps_clock.get_fps())
-            if fps < int(.85 * self.FPS_TARGET) - .5:
+            if fps < int(.85 * fps_target) - .5:
                 fps_label.render(self.screen, 0, 0, "%.1f FPS" % fps)
             pygame.display.update()
-            fps_clock.tick(self.FPS_TARGET)
+            fps_clock.tick(fps_target)
 
 
 class InformantContext():
