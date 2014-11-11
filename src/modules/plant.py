@@ -9,16 +9,16 @@ class PlantModule(Module):
         self._plantserver = context.get_config("plant_server")
         self._red_label = render.OutlinedTextImg(color="red", outlinesize=2, size=60)
         self._had_error = False
-        self._status = ""
+        self._status = 0
 
     def update_interval(self):
         if len(self._plantserver) == 0:
             return 60 * 60
 
         if self._had_error:
-            return 60  # retry every minute
+            return 1  # retry every minute
 
-        return 5 * 60  # refresh every 5 minutes
+        return 1  # refresh every 15 minutes
 
     def update(self, context):
         if len(self._plantserver) == 0:
@@ -38,7 +38,7 @@ class PlantModule(Module):
             return
 
         # normal condition
-        if not self._had_error and self._status == "wet":
+        if not self._had_error and (self._status == "wet" or self._status == 0):
             return
 
         label = "Water plant!" if not self._had_error else "Error fetching plant status"
