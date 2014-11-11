@@ -18,7 +18,7 @@ class PlantModule(Module):
         if self._had_error:
             return 60  # retry every minute
 
-        return 15 * 60  # refresh every 15 minutes
+        return 5 * 60  # refresh every 5 minutes
 
     def update(self, context):
         if len(self._plantserver) == 0:
