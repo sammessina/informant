@@ -26,7 +26,9 @@ class BingBGModule(Module):
             self.img_url = "http://www.bing.com%s" % result['images'][0]['url']
             f = ''
             for resolution in resolutions:
-                new_url = self.img_url.replace("1366x768", resolution, 1)
+                new_url = self.img_url.replace("1366x768", "%RES%", 1)
+                new_url = new_url.replace("1920x1080", "%RES%", 1)
+                new_url = new_url.replace("%RES%", resolution, 1)
                 try:
                     f = StringIO.StringIO(urllib2.urlopen(new_url, timeout=120).read())
                     break
