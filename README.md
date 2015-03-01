@@ -12,7 +12,7 @@ An information board designed to be easy to set up and use.
 
 ### Raspberry Pi Setup
 1. Install [Raspbian](http://www.raspberrypi.org/downloads)
-  * [2012-09-18-wheezy-raspbian](http://ftp.gnome.org/mirror/raspberrypi/images/raspbian/2012-09-18-wheezy-raspbian/2012-09-18-wheezy-raspbian.zip) seems to be more stable (2013+ drops network connection)
+  * Ensure A/C plug used is rated for enough current, at least 1 amp.
 2. Config Raspbian
   * config.txt options
     * disable_overscan=1
