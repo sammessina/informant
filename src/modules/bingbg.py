@@ -3,6 +3,7 @@ import json
 import StringIO
 
 import pygame
+import sys
 from module import Module
 import render
 
@@ -36,7 +37,7 @@ class BingBGModule(Module):
                     pass
             if f == '':
                 return
-            img_raw = pygame.image.load(f, self.img_url).convert()
+            img_raw = pygame.image.load(f, self.img_url).convert(32)
 
             # resize image to fill screen
             # img_y/img_x = screen_y/screen_x
@@ -49,7 +50,7 @@ class BingBGModule(Module):
             self.img = img_raw
             self.img_rect = self.img.get_rect()
         except:
-            pass
+            print sys.exc_info()
 
     def render(self, screen, context):
         if self.img is not None:
